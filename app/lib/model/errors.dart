@@ -1,7 +1,13 @@
 import 'package:meta/meta.dart';
 
+/// Sub-class of [ArgumentError] that the given value does not in
+/// between [minimum] and [maximum] as well as [double.nan] is
+/// applied.
 class OutOfBoundError extends ArgumentError {
+  /// Accepted minimum value in the boundary.
   final num minimum;
+
+  /// Accepted maximum value in the boundary.
   final num maximum;
 
   OutOfBoundError(num value,
@@ -11,22 +17,18 @@ class OutOfBoundError extends ArgumentError {
       this.maximum = double.infinity})
       : super.value(value, name, message);
 
+  /// A default message when the provide [message] is absent.
   @protected
   @mustBeOverridden
   String get defaultMessage => "This value is not in accepted range.";
 
   @override
   String toString() {
-    bool noMsg = message == null;
-    if (message is String) {
-      noMsg = message.isEmpty;
-    }
-
     StringBuffer buf = StringBuffer();
 
     buf
       ..write("OutOfBoundError: ")
-      ..writeln(noMsg ? defaultMessage : message)
+      ..writeln(message ?? defaultMessage)
       ..write("Applied value: ")
       ..write(invalidValue);
 
