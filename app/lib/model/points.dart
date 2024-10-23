@@ -5,13 +5,15 @@ extension type Quantity._(int _value) implements int {
   /// Construct new [Quantity] with applied [value].
   /// 
   /// The value must be positive and [OutOfBoundError] thrown otherwise.
-  Quantity(int value) : _value = value {
+  factory Quantity(int value) {
     if (value <= 0) {
       throw OutOfBoundError(value,
           name: "value",
           message: "Quantity must be positive integer.",
           minimum: 1);
     }
+
+    return Quantity._(value);
   }
 }
 

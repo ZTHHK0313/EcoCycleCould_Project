@@ -4,14 +4,16 @@ import 'errors.dart';
 
 enum RecyclableMaterial { plastic, metal, paper }
 
-final class RecycleBinCapacity {
-  final ({int plastic, int metal, int paper}) remains;
+final class RecycleBinRemainCapacity extends UnmodifiableMapBase<RecyclableMaterial, int> {
+  final int plastic;
+  final int metal;
+  final int paper;
 
-  RecycleBinCapacity(this.remains) {
+  RecycleBinRemainCapacity(this.plastic, this.metal, this.paper) {
     final invalidRemains = {
-      RecyclableMaterial.plastic.name: remains.plastic,
-      RecyclableMaterial.metal.name: remains.metal,
-      RecyclableMaterial.paper.name: remains.paper
+      RecyclableMaterial.plastic.name: plastic,
+      RecyclableMaterial.metal.name: metal,
+      RecyclableMaterial.paper.name: paper
     }.entries.where((e) => e.value > 100 || e.value < 0);
 
     if (invalidRemains.isNotEmpty) {
@@ -24,16 +26,33 @@ final class RecycleBinCapacity {
           maximum: 100);
     }
   }
+  
+  @override
+  int? operator [](Object? key) {
+    if (key is! RecyclableMaterial) {
+      throw TypeError();
+    }
 
-  Map<RecyclableMaterial, int> toMap() {
-    final LinkedHashMap<RecyclableMaterial, int> data = LinkedHashMap(
-        equals: (m1, m2) => m1.index == m2.index, hashCode: (m) => m.index)
-      ..addEntries([
-        MapEntry(RecyclableMaterial.plastic, remains.plastic),
-        MapEntry(RecyclableMaterial.metal, remains.metal),
-        MapEntry(RecyclableMaterial.paper, remains.paper)
-      ]);
+    return switch (key) {
+      RecyclableMaterial.plastic => plastic,
+      RecyclableMaterial.metal => metal,
+      RecyclableMaterial.paper => paper,
+      /* 
+        Other recycle bin material case.
 
-    return UnmodifiableMapView(data);
+        Do not remove for future implementation.
+      */
+      // ignore: unreachable_switch_case
+      _ => null
+    };
+  }
+  
+  @override
+  Iterable<RecyclableMaterial> get keys sync* {
+    yield RecyclableMaterial.plastic;
+    yield RecyclableMaterial.metal;
+    yield RecyclableMaterial.paper;
   }
 }
+
+
