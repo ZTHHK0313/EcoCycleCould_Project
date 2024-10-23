@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+
+import '../themes/colours.dart';
+
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final deviceMQSize = MediaQuery.of(context).size;
+    final horizontalPadding = deviceMQSize.width * 0.0625;
+
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: ecoGreen[500],
+            body: Center(
+                child: Card(
+                    color: ecoGreen[100],
+                    margin: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 8, horizontal: horizontalPadding),
+                        child: const _LoginControlUnit())))));
+  }
+}
+
+class _LoginControlUnit extends StatefulWidget {
+  const _LoginControlUnit();
+
+  @override
+  State<_LoginControlUnit> createState() {
+    return _LoginControlUnitState();
+  }
+}
+
+class _LoginControlUnitState extends State<_LoginControlUnit> {
+  final TextEditingController _unameCtrl = TextEditingController(),
+      _pwdCtrl = TextEditingController();
+
+  bool _loginFailed = false;
+
+  static final InputBorder _inputBorderTheme = OutlineInputBorder(borderSide: BorderSide(
+    color: ecoGreen[900]!
+  ));
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(mainAxisSize: MainAxisSize.min, children: [
+      TextField(
+        controller: _unameCtrl,
+        autocorrect: false,
+        enableSuggestions: false,
+        decoration: InputDecoration(
+            border: _inputBorderTheme,
+            labelText: "Username",
+            errorText: _loginFailed ? "Invalid username" : null),
+      ),
+      const Padding(padding: EdgeInsets.symmetric(vertical: 6)),
+      TextField(
+          controller: _pwdCtrl,
+          autocorrect: false,
+          enableSuggestions: false,
+          obscureText: true,
+          decoration: InputDecoration(
+            border: _inputBorderTheme,
+              labelText: "Password",
+              errorText: _loginFailed ? "Invalid password" : null)),
+      const Divider(),
+      ElevatedButton(
+          onPressed: () {
+            final unameVal = _unameCtrl.text;
+            final pwdVal = _pwdCtrl.text;
+
+            bool isInvalid = unameVal.isEmpty || pwdVal.isEmpty;
+            setState(() {
+              _loginFailed = isInvalid;
+            });
+          },
+          child: const Text("Login"))
+    ]);
+  }
+}
