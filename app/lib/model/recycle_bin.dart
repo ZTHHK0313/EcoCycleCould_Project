@@ -1,15 +1,16 @@
 import 'dart:collection';
 
 import 'errors.dart';
+import 'locations.dart';
 
 enum RecyclableMaterial { plastic, metal, paper }
 
-final class RecycleBinRemainCapacity extends UnmodifiableMapBase<RecyclableMaterial, int> {
+final class RemainCapacity extends UnmodifiableMapBase<RecyclableMaterial, int> {
   final int plastic;
   final int metal;
   final int paper;
 
-  RecycleBinRemainCapacity(this.plastic, this.metal, this.paper) {
+  RemainCapacity(this.plastic, this.metal, this.paper) {
     final invalidRemains = {
       RecyclableMaterial.plastic.name: plastic,
       RecyclableMaterial.metal.name: metal,
@@ -55,4 +56,10 @@ final class RecycleBinRemainCapacity extends UnmodifiableMapBase<RecyclableMater
   }
 }
 
+final class RecycleBin {
+  final int id;
+  final LocationInfo location;
+  final RemainCapacity capacity;
 
+  RecycleBin(this.id, this.location, this.capacity);
+}
