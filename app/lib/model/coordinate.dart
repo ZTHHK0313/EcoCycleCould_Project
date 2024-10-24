@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import 'errors.dart';
 
 const double _maxLatitude = 180;
@@ -7,6 +9,8 @@ const double _minLongitude = -90;
 
 extension type const Coordinate._((double, double) _loc) {
   static const Coordinate hkCenter = Coordinate._((22.3526404, 113.9628891));
+
+  @visibleForTesting
   static const Coordinate cityU = Coordinate._((22.347776, 114.180096));
 
   factory Coordinate(double latitude, double longitude) {

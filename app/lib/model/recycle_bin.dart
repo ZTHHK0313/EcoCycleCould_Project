@@ -5,12 +5,16 @@ import 'locations.dart';
 
 enum RecyclableMaterial { plastic, metal, paper }
 
-final class RemainCapacity extends UnmodifiableMapBase<RecyclableMaterial, int> {
-  final int plastic;
-  final int metal;
-  final int paper;
+final class RemainCapacity
+    extends UnmodifiableMapBase<RecyclableMaterial, int> {
+  final int _plastic;
+  final int _metal;
+  final int _paper;
 
-  RemainCapacity(this.plastic, this.metal, this.paper) {
+  RemainCapacity(int plastic, int metal, int paper)
+      : _plastic = plastic,
+        _metal = metal,
+        _paper = paper {
     final invalidRemains = {
       RecyclableMaterial.plastic.name: plastic,
       RecyclableMaterial.metal.name: metal,
@@ -27,7 +31,7 @@ final class RemainCapacity extends UnmodifiableMapBase<RecyclableMaterial, int> 
           maximum: 100);
     }
   }
-  
+
   @override
   int? operator [](Object? key) {
     if (key is! RecyclableMaterial) {
@@ -35,9 +39,9 @@ final class RemainCapacity extends UnmodifiableMapBase<RecyclableMaterial, int> 
     }
 
     return switch (key) {
-      RecyclableMaterial.plastic => plastic,
-      RecyclableMaterial.metal => metal,
-      RecyclableMaterial.paper => paper,
+      RecyclableMaterial.plastic => _plastic,
+      RecyclableMaterial.metal => _metal,
+      RecyclableMaterial.paper => _paper,
       /* 
         Other recycle bin material case.
 
@@ -47,7 +51,7 @@ final class RemainCapacity extends UnmodifiableMapBase<RecyclableMaterial, int> 
       _ => null
     };
   }
-  
+
   @override
   Iterable<RecyclableMaterial> get keys sync* {
     yield RecyclableMaterial.plastic;
