@@ -1,4 +1,12 @@
 #include <Arduino.h>
+//Notes:
+//MS1:H, MS2:H, MS3:L (1/8 microstep)
+//RESET->SLEEP (Disable sleep function on driver)
+
+//Driver Selection
+#define A4988
+//#define TMC2209
+
 //Pinout
 #define dirPin 1
 #define stepPin 2
@@ -19,7 +27,7 @@
 #define THIRD_BIN 20 cm //First Bin's Position (Not tested)
 
 
-//default is 1/8 microstep
+
 ////////////////////////////
 // stepper_init
 // Initialize the stepper motor, must be called before using the stepper motor
@@ -37,7 +45,7 @@ void stepper_init();
 void stepper_move(bool dir, uint8_t dis, uint8_t delay_us);
 
 ////////////////////////////
-// stepper_move_to
+// stepper_move_to (Not tested)
 // A function to move to any position,
 // it will use delay function, cannot interrupt.
 // Parameters: dir: direction, pos: position, delay_us: speed (70-1000) smaller is faster
@@ -55,7 +63,7 @@ void stepper_move_to(bool dir, uint8_t pos, uint8_t delay_us);
 void STEPPER_ROTATE(bool dir, uint8_t steps, uint8_t delay_us);
 
 ////////////////////////////
-// STEPPER_HOME
+// STEPPER_HOME (Not tested)
 // Internal function to Home the stepper motor. Go back to the zero position.
 // Do not use this function directly.
 // Author: KH
