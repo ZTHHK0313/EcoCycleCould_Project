@@ -85,7 +85,7 @@ final class LocationInfo {
 
     if (long > 0) {
       buf.write("E");
-    } else if (lat < 0) {
+    } else if (long < 0) {
       buf.write("W");
     }
 
