@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import 'errors.dart';
+import '../errors.dart';
 
 const double _maxLatitude = 180;
 const double _minLatitude = -180;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/recycle_bin.dart';
+import '../model/recycle_bin/capacity.dart';
 import '../themes/colours.dart' hide PointsRewardedColor;
 
 extension _RecyclableMaterialColorBinder on RecyclableMaterial {
@@ -11,6 +11,8 @@ extension _RecyclableMaterialColorBinder on RecyclableMaterial {
       };
 }
 
+// TODO: Consider uses stream based
+/*
 final class RecycleBinStatusInfo extends StatelessWidget {
   final RecycleBin recycleBin;
 
@@ -47,3 +49,4 @@ final class RecycleBinStatusInfo extends StatelessWidget {
     );
   }
 }
+*/

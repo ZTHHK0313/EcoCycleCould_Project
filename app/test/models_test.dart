@@ -1,8 +1,8 @@
-import 'package:eco_cycle_cloud/model/coordinate.dart';
+import 'package:eco_cycle_cloud/model/geographic/coordinate.dart';
 import 'package:eco_cycle_cloud/model/errors.dart';
-import 'package:eco_cycle_cloud/model/locations.dart';
-import 'package:eco_cycle_cloud/model/points.dart';
-import 'package:eco_cycle_cloud/model/recycle_bin.dart';
+import 'package:eco_cycle_cloud/model/geographic/address.dart';
+import 'package:eco_cycle_cloud/model/user_infos/points.dart';
+import 'package:eco_cycle_cloud/model/recycle_bin/capacity.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 
@@ -44,8 +44,8 @@ void main() {
     });
 
     test("location information", () {
-      const LocationInfo mockLocInfo =
-          LocationInfo("AC1, City U", HKDistrict.ssp, Coordinate.cityU);
+      const AddressInfo mockLocInfo =
+          AddressInfo("AC1, City U", HKDistrict.ssp, Coordinate.cityU);
 
       expect(mockLocInfo.region, equals(HKRegion.kl));
       expect(mockLocInfo.completedAddress, equals("AC1, City U, Kowloon"));
@@ -54,18 +54,18 @@ void main() {
 
   group("Recycle bin capacity", () {
     test("construction", () {
-      expect(() => RemainCapacity(555, 99, 99), throwsOutOfBoundError);
-      expect(() => RemainCapacity(99, 913, 99), throwsOutOfBoundError);
-      expect(() => RemainCapacity(99, 99, 333), throwsOutOfBoundError);
-      expect(() => RemainCapacity(-1, 32, 42), throwsOutOfBoundError);
-      expect(() => RemainCapacity(9, 23, -54), throwsOutOfBoundError);
-      expect(() => RemainCapacity(50, -87, 21), throwsOutOfBoundError);
-      expect(() => RemainCapacity(100, 100, 100), returnsNormally);
-      expect(() => RemainCapacity(0, 0, 0), returnsNormally);
+      expect(() => RemainCapacity(-1, 555, 99, 99), throwsOutOfBoundError);
+      expect(() => RemainCapacity(-1, 99, 913, 99), throwsOutOfBoundError);
+      expect(() => RemainCapacity(-1, 99, 99, 333), throwsOutOfBoundError);
+      expect(() => RemainCapacity(-1, -1, 32, 42), throwsOutOfBoundError);
+      expect(() => RemainCapacity(-1, 9, 23, -54), throwsOutOfBoundError);
+      expect(() => RemainCapacity(-1, 50, -87, 21), throwsOutOfBoundError);
+      expect(() => RemainCapacity(-1, 100, 100, 100), returnsNormally);
+      expect(() => RemainCapacity(-1, 0, 0, 0), returnsNormally);
     });
 
     test("structure", () {
-      final RemainCapacity mockCapacity = RemainCapacity(34, 67, 89);
+      final RemainCapacity mockCapacity = RemainCapacity(-1, 34, 67, 89);
 
       expect(mockCapacity, equals({
         RecyclableMaterial.plastic: 34,

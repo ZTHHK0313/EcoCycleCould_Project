@@ -1,4 +1,4 @@
-import 'errors.dart';
+import '../errors.dart';
 
 /// [int]-based type declaration to indicate number of items are applied.
 extension type Quantity._(int _value) implements int {

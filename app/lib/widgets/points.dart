@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../model/points.dart';
+import '../model/user_infos/points.dart';
 import '../themes/colours.dart' show PointsRewardedColor;
 
 enum _PointsTranscriptionAction {

@@ -1,12 +1,12 @@
 import 'coordinate.dart';
 
-abstract final class EnumeratedLocation {
-  const EnumeratedLocation._();
+abstract final class EnumeratedAddress {
+  const EnumeratedAddress._();
 
   String get fullName;
 }
 
-enum HKRegion implements EnumeratedLocation {
+enum HKRegion implements EnumeratedAddress {
   hk("Hong Kong Island"),
   kl("Kowloon"),
   nt("New Territories");
@@ -17,7 +17,7 @@ enum HKRegion implements EnumeratedLocation {
   const HKRegion(this.fullName);
 }
 
-enum HKDistrict implements EnumeratedLocation {
+enum HKDistrict implements EnumeratedAddress {
   cw("Central and Western", HKRegion.hk),
   wc("Wan Chai", HKRegion.hk),
   e("Eastern", HKRegion.hk),
@@ -45,12 +45,12 @@ enum HKDistrict implements EnumeratedLocation {
   const HKDistrict(this.fullName, this.region);
 }
 
-final class LocationInfo {
+final class AddressInfo {
   final String address;
   final HKDistrict district;
   final Coordinate coordinate;
 
-  const LocationInfo(this.address, this.district, this.coordinate);
+  const AddressInfo(this.address, this.district, this.coordinate);
 
   HKRegion get region => district.region;
 
