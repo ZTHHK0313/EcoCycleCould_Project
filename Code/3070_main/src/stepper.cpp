@@ -1,5 +1,9 @@
 #include "stepper.h"
 
+int8_t Current_Postion = 0 mm;
+bool is_Home = false;
+
+
 void stepper_init() {
     pinMode(stepPin, OUTPUT);
     pinMode(dirPin, OUTPUT);
@@ -25,24 +29,48 @@ void STEPPER_HOME() {
             ok = true;
         }
     }
+    is_Home = true;
     Serial.println("Homing done");
+    
     
 }
 
-
-
-void STEPPER_ROTATE(int dir, int steps, int delay_us) {
-  digitalWrite(dirPin, dir);
-  for (int x = 0; x < steps; x++) {
-    digitalWrite(stepPin, HIGH);
-    delayMicroseconds(delay_us);
-    digitalWrite(stepPin, LOW);
-    delayMicroseconds(delay_us);
-  }
+void stepper_move_to(bool dir, uint8_t pos, uint8_t delay_us){
+    int8_t temp = Current_Postion - pos;
+    if(temp > 0){
+        stepper_move(LEFT, temp, delay_us);
+    }else{
+        stepper_move(RIGHT, temp, delay_us);
+    }
 }
 
-void stepper_move_cm(int dir, int cm, int delay_us) {
-  int steps = cm * 2000;
-  STEPPER_ROTATE(dir, steps, delay_us);
+
+
+void STEPPER_ROTATE(bool dir, uint8_t steps, uint8_t delay_us) {
+    if(!is_Home){
+        Serial.println("Must Home First");
+        return;
+    }
+    
+    digitalWrite(dirPin, dir);
+    for (int _ = 0; _ < steps; _++) {
+        digitalWrite(stepPin, HIGH);
+        delayMicroseconds(delay_us);
+        digitalWrite(stepPin, LOW);
+        delayMicroseconds(delay_us);
+    }
+}
+
+void stepper_move(bool dir, uint8_t dis, uint8_t delay_us) {
+
+    if(Current_Postion + dir * dis < 0 || Current_Postion + dir * dis > MAX_POSITION){
+        Serial.println("Movement out of range");
+        return;
+    }
+
+    uint8_t steps = dis * STEP_PER_MM;
+    STEPPER_ROTATE(dir, steps, delay_us);// Move
+    Current_Postion += dir == LEFT ? dis : -dis;//update Pos
+
 }
 
