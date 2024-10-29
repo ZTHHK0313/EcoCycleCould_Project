@@ -3,6 +3,7 @@
 //MS1:H, MS2:H, MS3:L (1/8 microstep)
 //RESET->SLEEP (Disable sleep function on driver)
 
+
 //Driver Selection
 #define A4988
 //#define TMC2209
@@ -21,7 +22,7 @@
 //Config
 #define DEFAULT_SPEED 70 // fastest speed
 #define MAX_POSITION 23 cm //maximum position (Not tested)
-#define STEP_PER_MM 200 // const value 200 steps per mm for 1/8 microstep
+#define STEP_PER_MM 200 mm // const value 200 steps per mm for 1/8 microstep
 #define FIRST_BIN 0 cm //First Bin's Position (Not tested)
 #define SECOND_BIN 10 cm //First Bin's Position (Not tested)
 #define THIRD_BIN 20 cm //First Bin's Position (Not tested)
