@@ -1,5 +1,7 @@
 //Use Control A4988 stepper motor
 #include "stepper.h"
+#include "capacity.h"
+#include "smokedetcet.h"
 #include <Arduino.h>
  
  
