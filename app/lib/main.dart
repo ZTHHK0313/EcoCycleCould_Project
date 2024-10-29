@@ -7,6 +7,8 @@ import 'themes/colours.dart';
 import 'themes/states.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  
   runApp(const EcoCycleCloudApp());
 }
 
