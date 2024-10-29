@@ -18,8 +18,9 @@ String get _runningPlatform {
 
 final class RestClient extends BaseClient {
   late final Client _client;
+  final Uri apiGateway;
 
-  RestClient([Client? client]) {
+  RestClient(this.apiGateway, [Client? client]) {
     Client defaultClient;
 
     if (Platform.isIOS) {
@@ -44,6 +45,21 @@ final class RestClient extends BaseClient {
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
+    Uri origUrl = request.url, intraUrl;
+    assert(origUrl.hasAbsolutePath && !origUrl.hasFragment);
+
+    if (origUrl.hasAuthority) {
+      intraUrl = origUrl;
+    } else {
+      final reqPath = List.of(apiGateway.pathSegments);
+
+      reqPath.addAll(origUrl.pathSegments);
+
+      intraUrl = apiGateway.replace(pathSegments: reqPath);
+    }
+
+    final Request intraReq = Request(request.method, intraUrl);
+    
     PackageInfo pkgInfo = await PackageInfo.fromPlatform();
 
     StringBuffer uaBuf = StringBuffer();
@@ -57,7 +73,7 @@ final class RestClient extends BaseClient {
 
     request.headers["user-agent"] = uaBuf.toString();
 
-    return _client.send(request);
+    return _client.send(intraReq);
   }
 
   @override
