@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../themes/colours.dart';
+import 'user_form_mixin.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -33,43 +34,34 @@ class _LoginControlUnit extends StatefulWidget {
   }
 }
 
-class _LoginControlUnitState extends State<_LoginControlUnit> {
-  final TextEditingController _unameCtrl = TextEditingController(),
-      _pwdCtrl = TextEditingController();
-
+class _LoginControlUnitState extends State<_LoginControlUnit>
+    with UserInfoEditFormStateMixin<_LoginControlUnit> {
   bool _loginFailed = false;
 
-  static final InputBorder _inputBorderTheme = OutlineInputBorder(borderSide: BorderSide(
-    color: ecoGreen[900]!
-  ));
+  static final InputBorder _inputBorderTheme =
+      OutlineInputBorder(borderSide: BorderSide(color: ecoGreen[900]!));
 
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
-      TextField(
-        controller: _unameCtrl,
-        autocorrect: false,
-        enableSuggestions: false,
+      buildUsernameField(
+        context,
         decoration: InputDecoration(
             border: _inputBorderTheme,
             labelText: "Username",
             errorText: _loginFailed ? "Invalid username" : null),
       ),
       const Padding(padding: EdgeInsets.symmetric(vertical: 6)),
-      TextField(
-          controller: _pwdCtrl,
-          autocorrect: false,
-          enableSuggestions: false,
-          obscureText: true,
+      buildPasswordField(context,
           decoration: InputDecoration(
-            border: _inputBorderTheme,
+              border: _inputBorderTheme,
               labelText: "Password",
               errorText: _loginFailed ? "Invalid password" : null)),
       const Divider(),
       ElevatedButton(
           onPressed: () {
-            final unameVal = _unameCtrl.text;
-            final pwdVal = _pwdCtrl.text;
+            final unameVal = unameCtrl.text;
+            final pwdVal = pwdCtrl.text;
 
             bool isInvalid = unameVal.isEmpty || pwdVal.isEmpty;
             setState(() {
