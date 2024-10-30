@@ -2,8 +2,7 @@ import 'dart:collection';
 
 import '../errors.dart';
 import '../identifiable.dart';
-
-enum RecyclableMaterial { plastic, metal, paper }
+import 'material.dart';
 
 final class RemainCapacity
     extends UnmodifiableMapBase<RecyclableMaterial, int> implements Identifiable<int> {
