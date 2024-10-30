@@ -20,22 +20,26 @@ mixin UserInfoEditFormStateMixin<T extends StatefulWidget> on State<T> {
 
   @protected
   TextField buildUsernameField(BuildContext context,
-      {InputDecoration decoration = const InputDecoration()}) {
+      {bool enabled = true,
+      InputDecoration decoration = const InputDecoration()}) {
     return TextField(
         controller: unameCtrl,
         autocorrect: false,
         enableSuggestions: false,
-        decoration: decoration);
+        decoration: decoration,
+        enabled: enabled);
   }
 
   @protected
   TextField buildPasswordField(BuildContext context,
-      {InputDecoration decoration = const InputDecoration()}) {
+      {bool enabled = true,
+      InputDecoration decoration = const InputDecoration()}) {
     return TextField(
         controller: pwdCtrl,
         autocorrect: false,
         enableSuggestions: false,
         obscureText: true,
-        decoration: decoration);
+        decoration: decoration,
+        enabled: enabled);
   }
 }
