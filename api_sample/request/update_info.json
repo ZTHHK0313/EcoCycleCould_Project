@@ -1,0 +1,7 @@
+{
+    "session": "(Base64 hash)",
+    "update_info": {
+        "username": "bob",
+        "password": "(Base64, encrypted)"
+    }
+}
