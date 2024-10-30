@@ -1,6 +1,7 @@
 import 'package:eco_cycle_cloud/model/geographic/coordinate.dart';
 import 'package:eco_cycle_cloud/model/errors.dart';
 import 'package:eco_cycle_cloud/model/geographic/address.dart';
+import 'package:eco_cycle_cloud/model/recycle_bin/material.dart';
 import 'package:eco_cycle_cloud/model/user_infos/points.dart';
 import 'package:eco_cycle_cloud/model/recycle_bin/capacity.dart';
 
