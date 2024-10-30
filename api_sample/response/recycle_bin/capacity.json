@@ -1,0 +1,6 @@
+// Denote available capacity of three different material in percentage.
+{
+    "plastic": 45,
+    "metal": 75,
+    "paper": 90
+}
