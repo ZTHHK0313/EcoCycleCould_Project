@@ -1,0 +1,4 @@
+{
+    "isActived": true,
+    "expiry": 2592000 // Same description in ../login/success.json
+}
