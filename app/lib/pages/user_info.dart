@@ -1,14 +1,66 @@
 import 'package:flutter/material.dart';
 
+import '../themes/states.dart';
 import 'user_form_mixin.dart';
 
 final class UserInfoPage extends StatelessWidget {
   const UserInfoPage({super.key});
 
+  Future<bool> _promptLogout(BuildContext context) async {
+    return await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                  title: const Text("Logout"),
+                  content: const Text("Do you want to logout?"),
+                  actions: <TextButton>[
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop<bool>(context, true);
+                        },
+                        child: Text("Yes",
+                            style: TextStyle(color: Colors.red[800]!))),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop<bool>(context, false);
+                        },
+                        child: const Text("No"))
+                  ]);
+            }) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    final ButtonStyle criticalBtnStyle = ButtonStyle(
+        textStyle: ConstantWidgetStateProperties<TextStyle>.all(
+            const TextStyle(color: Colors.white)),
+        backgroundColor: ConstantWidgetStateProperties<Color>(Colors.red[800],
+            selecting: Colors.red[900], useDefaultIfAbsent: true));
+
+    return Scaffold(
+        body: SafeArea(
+            child: Column(children: <Flexible>[
+      Flexible(flex: 4, child: ListView(children: <Widget>[_UserInfoEditor()])),
+      Flexible(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+            ElevatedButton(
+                onPressed: () {},
+                style: criticalBtnStyle,
+                child: const Text("Report losing member card")),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+            ElevatedButton(
+                onPressed: () async {
+                  if (await _promptLogout(context)) {
+                    // Do logout here
+                  }
+                },
+                style: criticalBtnStyle,
+                child: const Text("Logout"))
+          ]))
+    ])));
   }
 }
 

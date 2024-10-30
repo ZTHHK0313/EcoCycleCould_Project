@@ -22,6 +22,9 @@ final class ConstantWidgetStateProperties<T> extends WidgetStateProperty<T?> {
       this.error,
       this.useDefaultIfAbsent = false});
 
+  factory ConstantWidgetStateProperties.all(T? value) =>
+      ConstantWidgetStateProperties(value, useDefaultIfAbsent: true);
+
   static bool _onActivateState(
           Set<WidgetState> states, Iterable<WidgetState> condition) =>
       condition.any((condState) => states.contains(condState));

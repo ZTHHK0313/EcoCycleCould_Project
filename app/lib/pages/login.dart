@@ -11,10 +11,10 @@ class LoginPage extends StatelessWidget {
     final deviceMQSize = MediaQuery.of(context).size;
     final horizontalPadding = deviceMQSize.width * 0.0625;
 
-    return SafeArea(
-        child: Scaffold(
-            backgroundColor: ecoGreen[500],
-            body: Center(
+    return Scaffold(
+        backgroundColor: ecoGreen[500],
+        body: SafeArea(
+            child: Center(
                 child: Card(
                     color: ecoGreen[100],
                     margin: EdgeInsets.symmetric(horizontal: horizontalPadding),
