@@ -12,20 +12,25 @@ final class UserInfoPage extends StatelessWidget {
   }
 }
 
-final class _UserInfoEditForm extends StatefulWidget {
-  _UserInfoEditForm({super.key});
+final class _UserInfoEditor extends StatefulWidget {
+  _UserInfoEditor({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _UserInfoEditFormState();
+    return _UserInfoEditorState();
   }
 }
 
-final class _UserInfoEditFormState extends State<_UserInfoEditForm>
-    with UserInfoEditFormStateMixin<_UserInfoEditForm> {
+final class _UserInfoEditorState extends State<_UserInfoEditor>
+    with UserInfoEditFormStateMixin<_UserInfoEditor> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Column(
+      children: <Widget>[
+        buildUsernameField(context),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 6)),
+        buildPasswordField(context)
+      ]
+    );
   }
 }

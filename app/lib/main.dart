@@ -8,7 +8,7 @@ import 'themes/states.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   runApp(const EcoCycleCloudApp());
 }
 
@@ -45,8 +45,13 @@ final class EcoCycleCloudApp extends StatelessWidget {
                     backgroundColor: ConstantWidgetStateProperties<Color>(
                         ecoGreen[200],
                         selecting: ecoGreen[500]!.withAlpha(0x7F)),
-                        foregroundColor: ConstantWidgetStateProperties(ecoGreen[800], selecting: ecoGreen[100]) 
-            )),
+                    foregroundColor: ConstantWidgetStateProperties(ecoGreen[800],
+                        selecting: ecoGreen[100]))),
+            inputDecorationTheme: InputDecorationTheme(
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: ecoGreen[900]!)),
+                errorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.redAccent))),
             useMaterial3: true),
         home: const HomePage());
   }

@@ -38,23 +38,18 @@ class _LoginControlUnitState extends State<_LoginControlUnit>
     with UserInfoEditFormStateMixin<_LoginControlUnit> {
   bool _loginFailed = false;
 
-  static final InputBorder _inputBorderTheme =
-      OutlineInputBorder(borderSide: BorderSide(color: ecoGreen[900]!));
-
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
       buildUsernameField(
         context,
         decoration: InputDecoration(
-            border: _inputBorderTheme,
             labelText: "Username",
             errorText: _loginFailed ? "Invalid username" : null),
       ),
       const Padding(padding: EdgeInsets.symmetric(vertical: 6)),
       buildPasswordField(context,
           decoration: InputDecoration(
-              border: _inputBorderTheme,
               labelText: "Password",
               errorText: _loginFailed ? "Invalid password" : null)),
       const Divider(),
