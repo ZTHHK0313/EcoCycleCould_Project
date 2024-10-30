@@ -17,4 +17,5 @@ void loop() {
     int delay_us = Serial.parseInt();
     stepper_move(dir, dis, delay_us);
   }
+  gaswarning();
 }
