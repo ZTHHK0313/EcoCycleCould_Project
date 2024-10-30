@@ -16,7 +16,7 @@ String get _runningPlatform {
   return "";
 }
 
-final class RestClient extends BaseClient {
+base class RestClient extends BaseClient {
   late final Client _client;
   final Uri apiGateway;
 
