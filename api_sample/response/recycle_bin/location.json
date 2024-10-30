@@ -1,5 +1,9 @@
 {
     "address": "(Room, Block/Flat, St no., St/Rd)",
     "district": "ssp", // See all 18 district enum value in https://github.com/ZTHHK0313/3070/blob/main/app/lib/model/geographic/address.dart#L20
-    "region": "kl" // Must be either "hk", "kl" or "nt"
+    "region": "kl", // Must be either "hk", "kl" or "nt"
+    "coordinate": { // Can be hard-coded
+        "latitude": 22.347776,
+        "longitude": 114.180096
+    }
 }
