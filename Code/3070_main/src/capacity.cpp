@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "capacity.h"
-scaledValue = 0;
+int scaledValue = 0;
 
 void dectectcap() {
     // Read the analog value from the photoresistor

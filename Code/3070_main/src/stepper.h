@@ -43,7 +43,7 @@ void stepper_init();
 // Parameters: dir: direction, dis: distance, delay_us: speed (70-1000) smaller is faster
 // Author: KH
 ////////////////////////////
-void stepper_move(bool dir, uint8_t dis, uint8_t delay_us);
+void stepper_move(bool dir, uint32_t dis, uint32_t delay_us);
 
 ////////////////////////////
 // stepper_move_to (Not tested)
@@ -52,7 +52,7 @@ void stepper_move(bool dir, uint8_t dis, uint8_t delay_us);
 // Parameters: dir: direction, pos: position, delay_us: speed (70-1000) smaller is faster
 // Author: KH
 ////////////////////////////
-void stepper_move_to(bool dir, uint8_t pos, uint8_t delay_us);
+void stepper_move_to(bool dir, uint32_t pos, uint32_t delay_us);
 
 ////////////////////////////
 // STEPPER_ROTATE
@@ -61,7 +61,7 @@ void stepper_move_to(bool dir, uint8_t pos, uint8_t delay_us);
 // Parameters: dir: direction, steps: steps, delay_us: speed 
 // Author: KH
 ////////////////////////////
-void STEPPER_ROTATE(bool dir, uint8_t steps, uint8_t delay_us);
+void STEPPER_ROTATE(bool dir, uint32_t steps, uint32_t delay_us);
 
 ////////////////////////////
 // STEPPER_HOME (Not tested)
