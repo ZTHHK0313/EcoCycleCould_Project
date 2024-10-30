@@ -1,6 +1,7 @@
 import 'package:eco_cycle_cloud/pages/home.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'themes/colours.dart';
@@ -9,7 +10,8 @@ import 'themes/states.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const EcoCycleCloudApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) => runApp(const EcoCycleCloudApp()));
 }
 
 final class EcoCycleCloudApp extends StatelessWidget {
