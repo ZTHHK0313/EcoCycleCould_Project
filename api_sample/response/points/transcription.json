@@ -1,0 +1,32 @@
+/*
+    Obtain transcription
+
+    Request body should be ../../request/req_by_uid.json as well as append optional integer
+    field "page" for retrive another page if available:
+    
+    {
+        "uid": 1,
+        "page": 2
+    }
+*/
+{
+    "page": 1, // Paged number
+    "next": null, // Next page if current page exceeed size limit of transcription. Null otherwise.
+    "transcription": [ // Ideally contains most recent 30 record for each page
+        {
+            "timestamp": "YYYY-MM-DDTHH:MM:SS+08:00", // ISO date format (https://en.wikipedia.org/wiki/ISO_8601)
+            "activities": [
+                {
+                    "qty": 1, // MUST BE POSITIVE INTEGER
+                    "pts": 35, // All ativities' points range in a single transcription must be either (-inf, 0] or [0, inf), mixed sign of point is forbidden.
+                    "desc": "Recycling" // Brief description of this activities
+                },
+                {
+                    "qty": 1,
+                    "pts": 0,
+                    "desc": "Gift"
+                }
+            ]
+        }
+    ]
+}
