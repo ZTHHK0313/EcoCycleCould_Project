@@ -3,5 +3,5 @@
     it's capacity.
 */
 {
-    "recycleBinId": 1 // Positive integer
+    "recycleBinId": [1, 3, 5] // At least one positive integer
 }
