@@ -1,11 +1,11 @@
-import 'package:eco_cycle_cloud/pages/home.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'themes/colours.dart';
 import 'themes/states.dart';
+
+import 'init.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,6 +55,6 @@ final class EcoCycleCloudApp extends StatelessWidget {
                 errorBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.redAccent))),
             useMaterial3: true),
-        home: const HomePage());
+        home: const ContentInitializer());
   }
 }
