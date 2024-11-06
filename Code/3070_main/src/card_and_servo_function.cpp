@@ -112,28 +112,23 @@ int searchCardByUID(byte uid[4]) {
   return -1;  
 }
 
-void displayCardInfo(int index) {
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0, 10);
-  display.print("Registered ID: ");
-  display.println(cards[index].id);
-  display.print("Points: ");
-  display.println(cards[index].count);
-  display.display();
-  delay(1000);
+float canPercentage = 0;   // testing
+float plasticPercentage = 0;  // testing
+float paperPercentage = 100;  // testing
+
+void updateBinCapacity(int wcase) {
+  float increase = 5.0;
+
+  if (wcase == 1) {
+    canPercentage += increase;
+  } else if (wcase == 2) {
+    plasticPercentage += increase;
+  } else if (wcase == 3) {
+    paperPercentage += increase;
+  }
 }
 
-void DisplayMessage(const char *message, int duration) {
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0, 10);
-  display.println(message);
-  display.display();
-  delay(duration);
-}
+const float fullCapacity = 90.0;
 
 void moveCoverServo() {
   coverServo.write(90);  // Move the servo to 90 degrees
@@ -153,63 +148,4 @@ int wasteClassify() { // testing
   } else {
     return 0;
   }
-}
-
-void classifyResult(int wcase) {
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0, 10);
-
-  if (wcase == 1) {
-    display.println("Waste has entered:");
-    display.println("Can recycling bin");
-  } else if (wcase == 2) {
-    display.println("Waste has entered:");
-    display.println("Plastic recycling bin");
-  } else if (wcase == 3) {
-    display.println("Waste has entered:");
-    display.println("Paper recycling bin");
-  } else {
-    display.println("Unrecognized Waste");
-    display.println("Please take back the waste");
-  }
-  display.display();
-  delay(2000);
-}
-
-float canPercentage = 0;   // testing
-float plasticPercentage = 0;  // testing
-float paperPercentage = 100;  // testing
-
-void updateBinCapacity(int wcase) {
-  float increase = 5.0;
-
-  if (wcase == 1) {
-    canPercentage += increase;
-  } else if (wcase == 2) {
-    plasticPercentage += increase;
-  } else if (wcase == 3) {
-    paperPercentage += increase;
-  }
-}
-
-const float fullCapacity = 90.0;
-void DisplayCapacity() {
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0, 10);
-
-  display.println("Occupied Capacity:");
-  display.print("Can: ");
-  display.println(canPercentage < fullCapacity ? String(canPercentage) + "%" : "FULL");
-
-  display.print("Plastic: ");
-  display.println(plasticPercentage < fullCapacity ? String(plasticPercentage) + "%" : "FULL");
-
-  display.print("Paper: ");
-  display.println(paperPercentage < fullCapacity ? String(paperPercentage) + "%" : "FULL");
-
-  display.display();
 }
