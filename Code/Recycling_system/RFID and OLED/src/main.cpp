@@ -26,20 +26,11 @@ struct Card {
 int curr_cards = 0;  
 Card cards[MAX_CARDS];  
 
-byte validUIDs[][4] = {
-  {99, 178, 2, 49},
-  {4, 80, 57, 162},
-  {77, 11, 239, 176},
-};
-
-
-const int numValidUIDs = sizeof(validUIDs) / sizeof(validUIDs[0]);  
 byte scannedUID[4];  
 MFRC522 rfid(SS_PIN, RST_PIN);
 
 void printUID(byte *uid);
 void DisplayCapacity();
-bool isValidUID(byte *uid);
 int searchCardByUID(byte uid[4]);
 bool addCard(int id, byte uid[4]);
 int wasteClassify();
@@ -75,30 +66,25 @@ void loop() {
   memcpy(scannedUID, rfid.uid.uidByte, 4);
   printUID(scannedUID);  
 
-  if (isValidUID(scannedUID)) {
-    int cardIndex = searchCardByUID(scannedUID);
-    if (cardIndex == -1) {
-      addCard(curr_cards + 1, scannedUID);
-    } else {
-      moveCoverServo();
-      int result = wasteClassify(); // Capture the classification result
+  moveCoverServo();  // Always open the cover when a card is detected
 
-      // Only increment the count and display info if waste is recognized
-      if (result != 0) {
-        cards[cardIndex].count++;
-        updateBinCapacity(result); // Update the bin capacity based on the classification result
-        displayCardInfo(cardIndex);
-      }
-    }
+  int cardIndex = searchCardByUID(scannedUID);
+  if (cardIndex == -1) {
+    addCard(curr_cards + 1, scannedUID);
   } else {
-    DisplayMessage("Invalid Card", 2000);  
+    int result = wasteClassify(); // Capture the classification result
+
+    if (result != 0) {
+      cards[cardIndex].count++;
+      updateBinCapacity(result);
+      displayCardInfo(cardIndex);
+    }
   }
 
   rfid.PICC_HaltA();
   rfid.PCD_StopCrypto1();
   DisplayCapacity();
 }
-
 
 void printUID(byte *uid) {
   for (byte i = 0; i < 4; i++) {
@@ -109,7 +95,7 @@ void printUID(byte *uid) {
 }
 
 bool addCard(int id, byte uid[4]) {
-  if (curr_cards >= MAX_CARDS) {  // Changed to >=
+  if (curr_cards >= MAX_CARDS) {  
     DisplayMessage("Error: Card DB Full", 2000);
     return false;
   }
@@ -118,32 +104,19 @@ bool addCard(int id, byte uid[4]) {
   cards[curr_cards].id = id;
   cards[curr_cards].count = 1;  
   
-  moveCoverServo();
   int result = wasteClassify();
   if (result != 0){
-    updateBinCapacity(result); // Update the bin capacity based on the classification result
+    updateBinCapacity(result);
     displayCardInfo(curr_cards);
     curr_cards++;
     return true;
-  }
-  // wasteClassify();
-
-
-  // displayCardInfo(curr_cards);  // Moved this below to show the correct card info
-  // curr_cards++;  
-  // return true;
-}
-
-bool isValidUID(byte *uid) {
-  for (int i = 0; i < numValidUIDs; i++) {
-    if (memcmp(uid, validUIDs[i], 4) == 0) return true;  // Simplified
   }
   return false;
 }
 
 int searchCardByUID(byte uid[4]) {
   for (int i = 0; i < curr_cards; i++) {
-    if (memcmp(uid, cards[i].uid, 4) == 0) return i;  // Using memcmp
+    if (memcmp(uid, cards[i].uid, 4) == 0) return i;
   }
   return -1;  
 }
@@ -182,19 +155,14 @@ int wcase = 3; // testing
 int wasteClassify() {
   DisplayMessage("Analyzing...", 2000);
 
-  // Simulate classification (replace with actual logic later)
   classifyResult(wcase);
 
-  // Return 0 for unrecognized waste, or the corresponding bin number
   if (wcase == 1 || wcase == 2 || wcase == 3) {
     return wcase;
   } else {
-    return 0; // Indicating unrecognized waste
+    return 0;
   }
 }
-
-
-
 
 void classifyResult(int wcase) {
   display.clearDisplay();
@@ -217,11 +185,6 @@ void classifyResult(int wcase) {
   }
   display.display();
   delay(2000);
-
-  // Only move the servo for unrecognized waste
-  if (wcase != 1 && wcase != 2 && wcase != 3) {
-    moveCoverServo();
-  }
 }
 
 float canPercentage = 0;   // testing
@@ -229,21 +192,16 @@ float plasticPercentage = 0;  // testing
 float paperPercentage = 100;  // testing
 
 void updateBinCapacity(int wcase) {
-  // Assuming each addition reduces available capacity by a fixed percentage
-  float increase = 5.0;  // For example, every time a bin is used, it decreases by 5%
+  float increase = 5.0;
 
   if (wcase == 1) {
     canPercentage += increase;
-
   } else if (wcase == 2) {
     plasticPercentage += increase;
-
   } else if (wcase == 3) {
     paperPercentage += increase;
-
   }
 }
-
 
 const float fullCapacity = 90.0;
 void DisplayCapacity() {
@@ -264,4 +222,3 @@ void DisplayCapacity() {
 
   display.display();
 }
-
