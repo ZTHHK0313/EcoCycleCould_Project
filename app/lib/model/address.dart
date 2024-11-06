@@ -1,4 +1,4 @@
-import 'coordinate.dart';
+import 'package:latlong2/latlong.dart';
 
 abstract final class EnumeratedAddress {
   const EnumeratedAddress._();
@@ -48,7 +48,7 @@ enum HKDistrict implements EnumeratedAddress {
 final class AddressInfo {
   final String address;
   final HKDistrict district;
-  final Coordinate coordinate;
+  final LatLng coordinate;
 
   const AddressInfo(this.address, this.district, this.coordinate);
 

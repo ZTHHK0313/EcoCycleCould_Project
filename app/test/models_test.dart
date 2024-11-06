@@ -1,11 +1,13 @@
-import 'package:eco_cycle_cloud/model/geographic/coordinate.dart';
 import 'package:eco_cycle_cloud/model/errors.dart';
-import 'package:eco_cycle_cloud/model/geographic/address.dart';
+import 'package:eco_cycle_cloud/model/address.dart';
 import 'package:eco_cycle_cloud/model/recycle_bin/material.dart';
 import 'package:eco_cycle_cloud/model/user_infos/points.dart';
 import 'package:eco_cycle_cloud/model/recycle_bin/capacity.dart';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:latlong2/latlong.dart';
+
+const LatLng cityULoc = LatLng(22.347776, 114.180096);
 
 final throwsOutOfBoundError = throwsA(isA<OutOfBoundError>());
 
@@ -36,17 +38,10 @@ void main() {
   });
 
   group("Geographics", () {
-    test("coordinate", () {
-      expect(() => Coordinate(190, 23), throwsOutOfBoundError);
-      expect(() => Coordinate(-181, -24), throwsOutOfBoundError);
-      expect(() => Coordinate(22, 91), throwsOutOfBoundError);
-      expect(() => Coordinate(-64, -120), throwsOutOfBoundError);
-      expect(() => Coordinate(0, 0), returnsNormally);
-    });
 
     test("location information", () {
       const AddressInfo mockLocInfo =
-          AddressInfo("AC1, City U", HKDistrict.ssp, Coordinate.cityU);
+          AddressInfo("AC1, City U", HKDistrict.ssp, cityULoc);
 
       expect(mockLocInfo.region, equals(HKRegion.kl));
       expect(mockLocInfo.completedAddress, equals("AC1, City U, Kowloon"));

@@ -2,10 +2,12 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../model/recycle_bin/location.dart';
-import '../model/geographic/coordinate.dart';
 import '../widgets/state_updater.dart';
+import '../controller/location.dart';
+
 
 final class RecycleBinMapPage extends StatefulWidget {
   const RecycleBinMapPage({super.key});
@@ -17,7 +19,7 @@ final class RecycleBinMapPage extends StatefulWidget {
 }
 
 class _RecycleBinMapPageState extends State<RecycleBinMapPage> {
-  late final AsyncMemoizer<Coordinate> _coordinateMemorizer;
+  late final AsyncMemoizer<LatLng> _coordinateMemorizer;
   late final GlobalKey<StateUpdater<_RecycleBinMapInterface>> _mapKey;
 
   @override
@@ -28,42 +30,6 @@ class _RecycleBinMapPageState extends State<RecycleBinMapPage> {
   }
 
   bool get _isKeyAttachedState => _mapKey.currentState != null;
-
-  Future<Coordinate> _getGPSLocation() async {
-    if (!await Geolocator.isLocationServiceEnabled()) {
-      if (context.mounted) {
-        ScaffoldMessenger.maybeOf(context)?.showSnackBar(const SnackBar(
-            content: Text(
-                "To show recycle bin in surrounded area, please enable location service.")));
-      }
-
-      return Coordinate.hkCenter;
-    }
-
-    LocationPermission permission = await Geolocator.checkPermission();
-
-    try {
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
-    } catch (err) {
-      // Just return default coordinate if throw during request permission.
-    }
-
-    switch (permission) {
-      case LocationPermission.whileInUse:
-      case LocationPermission.always:
-        Position pos = await Geolocator.getCurrentPosition();
-
-        return Coordinate(pos.latitude, pos.longitude);
-      case LocationPermission.denied:
-      case LocationPermission.deniedForever:
-      case LocationPermission.unableToDetermine:
-        break;
-    }
-
-    return Coordinate.hkCenter;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +43,8 @@ class _RecycleBinMapPageState extends State<RecycleBinMapPage> {
               icon: const Icon(Icons.refresh))
         ]),
         body: SafeArea(
-            child: FutureBuilder<Coordinate>(
-                future: _coordinateMemorizer.runOnce(_getGPSLocation),
+            child: FutureBuilder<LatLng>(
+                future: _coordinateMemorizer.runOnce(obtainCurrentLocation),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
@@ -101,7 +67,7 @@ class _RecycleBinMapPageState extends State<RecycleBinMapPage> {
 }
 
 final class _RecycleBinMapInterface extends StatefulWidget {
-  final Coordinate coordinate;
+  final LatLng coordinate;
 
   _RecycleBinMapInterface(this.coordinate,
       {required GlobalKey<StateUpdater<_RecycleBinMapInterface>> key});
@@ -141,3 +107,4 @@ class _RecycleBinMapInterfaceState extends State<_RecycleBinMapInterface>
     );
   }
 }
+
