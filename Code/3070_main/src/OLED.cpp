@@ -1,11 +1,10 @@
-#include <SPI.h>
-#include <MFRC522.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-#include <Wire.h>
-#include <Servo.h>
+#include "OLED.h"
+#include "card_and_servo_setting.h"
+#include "capacity.h"
 
-void displayCardInfo(int index) {
+
+
+void displayCardInfo(int index,Card* cards) {
   display.clearDisplay();
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
@@ -27,29 +26,6 @@ void DisplayMessage(const char *message, int duration) {
   display.display();
   delay(duration);
 }
-
-void DisplayCapacity() {
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0, 10);
-
-  display.println("Occupied Capacity:");
-  display.print("Can: ");
-  display.println(canPercentage < fullCapacity ? String(canPercentage) + "%" : "FULL");
-
-  display.print("Plastic: ");
-  display.println(plasticPercentage < fullCapacity ? String(plasticPercentage) + "%" : "FULL");
-
-  display.print("Paper: ");
-  display.println(paperPercentage < fullCapacity ? String(paperPercentage) + "%" : "FULL");
-
-  display.display();
-}
-
-
-
-
 
 void classifyResult(int wcase) {
   display.clearDisplay();

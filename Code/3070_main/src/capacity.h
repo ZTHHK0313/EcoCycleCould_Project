@@ -1,4 +1,12 @@
-#define photoResistorPin  34  // Use any ADC pin
-#define adcMaxValue  4095   // 12-bit ADC resolution
+#include <SPI.h> 
+#include <Wire.h> 
+#include <Adafruit_GFX.h> 
+#include <Adafruit_SSD1306.h>
 
-void dectectcap();
+#define SS_PIN 53
+#define RST_PIN 5
+#define SCREEN_WIDTH 128  
+#define SCREEN_HEIGHT 64  
+#define OLED_RESET -1 
+const int ldrPins[] = {A0, A1, A2};
+float getLDRPercentage(int pin);
