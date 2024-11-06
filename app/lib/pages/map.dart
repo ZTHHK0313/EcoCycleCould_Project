@@ -1,13 +1,12 @@
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../model/recycle_bin/location.dart';
 import '../widgets/state_updater.dart';
 import '../controller/location.dart';
-
 
 final class RecycleBinMapPage extends StatefulWidget {
   const RecycleBinMapPage({super.key});
@@ -87,6 +86,10 @@ class _RecycleBinMapInterfaceState extends State<_RecycleBinMapInterface>
   void initState() {
     super.initState();
     _mapCtrl = MapController();
+
+    obtainCurrentLocation().then((loc) {
+      _mapCtrl.move(loc, 1);
+    });
   }
 
   @override
@@ -97,14 +100,48 @@ class _RecycleBinMapInterfaceState extends State<_RecycleBinMapInterface>
 
   @override
   void updateToRecent() {
-    // TODO: implement updateToRecent
+    setState(() {});
+  }
+
+  void _openRecycleBinDialog(BuildContext context, RecycleBinLocation rbInfo) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(rbInfo.address.completedAddress),
+            actions: [
+              TextButton(onPressed: () {}, child: const Text("Add to bookmark"))
+            ],
+          );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[Expanded(child: FlutterMap(children: []))],
+      children: <Widget>[
+        Expanded(
+            child: FlutterMap(children: [
+          FutureBuilder(
+              future: _locations,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return MarkerLayer(
+                      markers: snapshot.data!
+                          .map((rbInfo) => Marker(
+                              point: rbInfo.coordinate,
+                              child: IconButton(
+                                  onPressed: () {
+                                    _openRecycleBinDialog(context, rbInfo);
+                                  },
+                                  icon: const Icon(FontAwesomeIcons.recycle))))
+                          .toList(growable: false));
+                }
+
+                return const SizedBox();
+              })
+        ]))
+      ],
     );
   }
 }
-

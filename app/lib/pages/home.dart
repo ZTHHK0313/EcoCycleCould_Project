@@ -1,14 +1,14 @@
-import 'package:eco_cycle_cloud/controller/location.dart';
-import 'package:eco_cycle_cloud/init.dart';
-import 'package:eco_cycle_cloud/model/user_infos/user.dart';
-import 'package:eco_cycle_cloud/widgets/recycle_bin.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
+import '../controller/location.dart';
 import '../model/recycle_bin/location.dart';
+import '../model/user_infos/user.dart';
+import '../widgets/recycle_bin.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
