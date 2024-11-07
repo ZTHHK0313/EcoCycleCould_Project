@@ -2,20 +2,34 @@
 #include "stepper.h"
 #include "capacity.h"
 #include "smokedetcet.h"
+#include "APIServer.h"
 #include <Arduino.h>
- 
+#ifndef DATA_H
+#define DATA_H
+#include "data.h"
+#endif
+
  
 void setup() {
   Serial.begin(115200);
-  stepper_init();
+  //stepper_init();
+
+  data_init();
+  while(!API_Server_init()){
+    Serial.println("Server failed to start, retrying...");
+  }
 }
 void loop() {
-//get serial input
-  if (Serial.available() > 0) {
-    int dir = Serial.parseInt();
-    int dis = Serial.parseInt();
-    int delay_us = Serial.parseInt();
-    stepper_move(dir, dis, delay_us);
-  }
-  gaswarning();
+  // if (Serial.available() > 0) {
+  //   int dir = Serial.parseInt();
+  //   int dis = Serial.parseInt();
+  //   int delay_us = Serial.parseInt();
+  //   stepper_move(dir, dis, delay_us);
+  // }
+  //gaswarning();s
+
+
 }
+
+
+
