@@ -1,0 +1,9 @@
+path : ../YoloDataSets
+train: images/train
+val: images/val
+test: 
+
+# class names
+names: 
+    0: m
+    1: p
