@@ -1,11 +1,11 @@
-import 'package:eco_cycle_cloud/model/user_infos/user.dart';
-import 'package:eco_cycle_cloud/pages/home.dart';
-import 'package:eco_cycle_cloud/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'model/user_infos/user.dart';
+import 'pages/home.dart';
+import 'pages/login.dart';
 import 'themes/colours.dart';
 import 'themes/states.dart';
 

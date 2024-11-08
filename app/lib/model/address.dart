@@ -1,5 +1,3 @@
-import 'package:latlong2/latlong.dart';
-
 abstract final class EnumeratedAddress {
   const EnumeratedAddress._();
 
@@ -54,7 +52,7 @@ final class AddressInfo {
   HKRegion get region => district.region;
 
   String get completedAddress =>
-      "$address, ${region.fullName}";
+      "$address, ${district.fullName}, ${region.fullName}";
 
   @override
   String toString() {

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../model/user_infos/user.dart';
 import '../themes/colours.dart';
 import 'user_form_mixin.dart';
-import 'home.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

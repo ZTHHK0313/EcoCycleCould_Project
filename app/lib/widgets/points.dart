@@ -7,7 +7,7 @@ import '../themes/colours.dart' show PointsRewardedColor;
 
 enum _PointsTranscriptionAction {
   gain(PointsRewardedColor.gain),
-  retain(null),
+  retain(Colors.grey),
   deduct(PointsRewardedColor.deduct);
 
   final Color? backgroundColor;
@@ -36,13 +36,13 @@ final class PointsActivity extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         isThreeLine: false,
-        title: Text(tuple.description),
-        trailing: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Text>[
-              Text("${tuple.quantity}x"),
-              Text("${tuple.netPoints}")
-            ]));
+        title: Text(tuple.description, style: const TextStyle(fontSize: 20)),
+        trailing: SizedBox(width: 100, child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+          Text("Qty:${tuple.quantity}", style: const TextStyle(fontSize: 16)),
+          Text("${tuple.netPoints}", style: const TextStyle(fontSize: 16))
+        ])));
   }
 }
 
@@ -71,12 +71,21 @@ final class _PointsStatementState extends State<PointsStatement> {
             expanded = value;
           });
         },
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(6))),
+        collapsedShape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(6))),
+        collapsedBackgroundColor: action.backgroundColor,
         backgroundColor: action.backgroundColor,
         title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Text>[
-              Text("Points ${action.name}"),
-              Text("${totalPts > 0 ? '+' : ''}$totalPts")
+              Text("Points ${action.name}",
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.w700)),
+              Text("${totalPts > 0 ? '+' : ''}$totalPts",
+                  style: const TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.w700))
             ]),
         trailing: Icon(
             expanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),

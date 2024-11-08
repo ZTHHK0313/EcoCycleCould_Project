@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:cronet_http/cronet_http.dart';
 import 'package:cupertino_http/cupertino_http.dart';
 import 'package:http/http.dart'
@@ -19,6 +20,24 @@ String get _runningPlatform {
 base class RestClient extends BaseClient {
   late final Client _client;
   final Uri apiGateway;
+
+  static final AsyncMemoizer<String> _uaStrMemorizer = AsyncMemoizer();
+
+  static Future<String> get userAgentString =>
+      _uaStrMemorizer.runOnce(() async {
+        PackageInfo pkgInfo = await PackageInfo.fromPlatform();
+
+        StringBuffer uaBuf = StringBuffer();
+
+        uaBuf
+          ..write("ECCLoyalty/")
+          ..write(pkgInfo.version)
+          ..write(" (")
+          ..write(_runningPlatform)
+          ..write(")");
+
+        return uaBuf.toString();
+      });
 
   RestClient(this.apiGateway, [Client? client]) {
     Client defaultClient;
@@ -44,19 +63,8 @@ base class RestClient extends BaseClient {
   }
 
   @override
-  Future<StreamedResponse> send(BaseRequest request) async {    
-    PackageInfo pkgInfo = await PackageInfo.fromPlatform();
-
-    StringBuffer uaBuf = StringBuffer();
-
-    uaBuf
-      ..write("ECCLoyalty/")
-      ..write(pkgInfo.version)
-      ..write(" (")
-      ..write(_runningPlatform)
-      ..write(")");
-
-    request.headers["user-agent"] = uaBuf.toString();
+  Future<StreamedResponse> send(BaseRequest request) async {
+    request.headers["user-agent"] = await userAgentString;
 
     return _client.send(request);
   }
