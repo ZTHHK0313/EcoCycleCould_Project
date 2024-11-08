@@ -65,20 +65,20 @@ class _LoginControlUnitState extends State<_LoginControlUnit>
       const Divider(),
       Consumer<CurrentUserManager>(builder: (context, usrMgr, _) {
         return ElevatedButton(
-          onPressed: () async {
-            final unameVal = unameCtrl.text;
-            final pwdVal = pwdCtrl.text;
+            onPressed: () async {
+              final unameVal = unameCtrl.text;
+              final pwdVal = pwdCtrl.text;
 
-            User? usrInfo = await _onLogin(unameVal, pwdVal);
-            setState(() {
-              _loginFailed = usrInfo == null;
-            });
+              User? usrInfo = await _onLogin(unameVal, pwdVal);
+              setState(() {
+                _loginFailed = usrInfo == null;
+              });
 
-            if (usrInfo != null) {
-              usrMgr.attachUser(usrInfo);
-            }
-          },
-          child: const Text("Login"));
+              if (usrInfo != null) {
+                usrMgr.attachUser(usrInfo);
+              }
+            },
+            child: const Text("Login"));
       })
     ]);
   }

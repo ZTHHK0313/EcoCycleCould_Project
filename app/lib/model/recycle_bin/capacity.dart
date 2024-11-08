@@ -4,8 +4,8 @@ import '../errors.dart';
 import '../identifiable.dart';
 import 'material.dart';
 
-final class RemainCapacity
-    extends UnmodifiableMapBase<RecyclableMaterial, int> implements Identifiable<int> {
+final class RemainCapacity extends UnmodifiableMapBase<RecyclableMaterial, int>
+    implements Identifiable<int> {
   final int recycleBinId;
   final int _plastic;
   final int _metal;
@@ -58,7 +58,7 @@ final class RemainCapacity
     yield RecyclableMaterial.metal;
     yield RecyclableMaterial.paper;
   }
-  
+
   @override
   int get identifier => recycleBinId;
 }

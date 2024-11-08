@@ -75,17 +75,22 @@ final class _HomePageState extends State<HomePage> {
     final currentUsr = context.watch<CurrentUserManager>().current;
 
     return Scaffold(
-      appBar: AppBar(title: FutureBuilder<int>(future: getUserTotalPts(currentUsr), builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Text("Pts: ${snapshot.data}");
-        }
+      appBar: AppBar(
+          title: FutureBuilder<int>(
+              future: getUserTotalPts(currentUsr),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text("Pts: ${snapshot.data}");
+                }
 
-        return const SizedBox();
-      }), actions: <IconButton>[
-        // For user info page
-        IconButton(
-            onPressed: _streamCurrentLocation, icon: const Icon(Icons.refresh))
-      ]),
+                return const SizedBox();
+              }),
+          actions: <IconButton>[
+            // For user info page
+            IconButton(
+                onPressed: _streamCurrentLocation,
+                icon: const Icon(Icons.refresh))
+          ]),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,

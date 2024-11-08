@@ -37,12 +37,16 @@ final class PointsActivity extends StatelessWidget {
     return ListTile(
         isThreeLine: false,
         title: Text(tuple.description, style: const TextStyle(fontSize: 20)),
-        trailing: SizedBox(width: 100, child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-          Text("Qty:${tuple.quantity}", style: const TextStyle(fontSize: 16)),
-          Text("${tuple.netPoints}", style: const TextStyle(fontSize: 16))
-        ])));
+        trailing: SizedBox(
+            width: 100,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text("Qty:${tuple.quantity}",
+                      style: const TextStyle(fontSize: 16)),
+                  Text("${tuple.netPoints}",
+                      style: const TextStyle(fontSize: 16))
+                ])));
   }
 }
 

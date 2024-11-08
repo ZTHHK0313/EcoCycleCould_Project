@@ -62,7 +62,9 @@ final class EcoCycleCloudApp extends StatelessWidget {
                       errorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.redAccent))),
                   useMaterial3: true),
               home: Consumer<CurrentUserManager>(builder: (context, usrMgr, _) {
-                return usrMgr.hasCurrentUser ? const HomePage() : const LoginPage();
+                return usrMgr.hasCurrentUser
+                    ? const HomePage()
+                    : const LoginPage();
               }));
         });
   }

@@ -23,26 +23,24 @@ final class RecycleBinStatusInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         color: ecoGreen[100],
-        child: Column(
-          children: <Widget>[
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                child: Text(rbLoc.address.completedAddress,
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                        fontSize: 28, fontWeight: FontWeight.w700))),
-            const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                child: Divider()),
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                child: Center(child: Column(
-                  children: <Widget>[
-                    for (MapEntry<RecyclableMaterial, int> entry
-                        in capacity.entries)
-                      Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: ListTile(
+        child: Column(children: <Widget>[
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              child: Text(rbLoc.address.completedAddress,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                      fontSize: 28, fontWeight: FontWeight.w700))),
+          const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12), child: Divider()),
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              child: Center(
+                  child: Column(children: <Widget>[
+                for (MapEntry<RecyclableMaterial, int> entry
+                    in capacity.entries)
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: ListTile(
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(6))),
@@ -53,9 +51,7 @@ final class RecycleBinStatusInfo extends StatelessWidget {
                           trailing: Text("${entry.value}%",
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w400))))
-                  ]
-                )))
-          ]
-        ));
+              ])))
+        ]));
   }
 }

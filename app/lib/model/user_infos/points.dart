@@ -3,7 +3,7 @@ import '../errors.dart';
 /// [int]-based type declaration to indicate number of items are applied.
 extension type Quantity._(int _value) implements int {
   /// Construct new [Quantity] with applied [value].
-  /// 
+  ///
   /// The value must be positive and [OutOfBoundError] thrown otherwise.
   factory Quantity(int value) {
     if (value <= 0) {
@@ -23,7 +23,7 @@ final class PointsActivityTuple {
   final int points;
 
   /// Number of this activity occured repeatedly.
-  /// 
+  ///
   /// If no specified, it applys `1` automatically.
   final Quantity quantity;
 
@@ -46,7 +46,7 @@ final class PointsActivityTuple {
 /// as well as [timestamp].
 final class PointsTranscription {
   /// Records every activities made in this transcription.
-  /// 
+  ///
   /// Every [PointsActivityTuple.points] should be either all non-positive (as gaining points)
   /// or all non-negative (as deducting points). Coexisting positive and negaitve points
   /// will cause [ArgumentError] thrown.

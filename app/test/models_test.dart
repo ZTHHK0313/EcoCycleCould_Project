@@ -38,7 +38,6 @@ void main() {
   });
 
   group("Geographics", () {
-
     test("location information", () {
       const AddressInfo mockLocInfo =
           AddressInfo("AC1, City U", HKDistrict.ssp);
@@ -63,11 +62,13 @@ void main() {
     test("structure", () {
       final RemainCapacity mockCapacity = RemainCapacity(-1, 34, 67, 89);
 
-      expect(mockCapacity, equals({
-        RecyclableMaterial.plastic: 34,
-        RecyclableMaterial.metal: 67,
-        RecyclableMaterial.paper: 89
-      }, 3));
+      expect(
+          mockCapacity,
+          equals({
+            RecyclableMaterial.plastic: 34,
+            RecyclableMaterial.metal: 67,
+            RecyclableMaterial.paper: 89
+          }, 3));
     });
   });
 }

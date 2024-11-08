@@ -1,4 +1,3 @@
-
 enum RecyclableMaterial { plastic, metal, paper }
 
 extension RecyclableMaterialDisplayNameExtension on RecyclableMaterial {
