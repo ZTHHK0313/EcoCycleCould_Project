@@ -41,7 +41,7 @@ void main() {
 
     test("location information", () {
       const AddressInfo mockLocInfo =
-          AddressInfo("AC1, City U", HKDistrict.ssp, cityULoc);
+          AddressInfo("AC1, City U", HKDistrict.ssp);
 
       expect(mockLocInfo.region, equals(HKRegion.kl));
       expect(mockLocInfo.completedAddress, equals("AC1, City U, Kowloon"));

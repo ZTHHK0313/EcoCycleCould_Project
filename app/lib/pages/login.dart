@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../model/user_infos/user.dart';
 import '../themes/colours.dart';
 import 'user_form_mixin.dart';
+import 'home.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -38,6 +41,14 @@ class _LoginControlUnitState extends State<_LoginControlUnit>
     with UserInfoEditFormStateMixin<_LoginControlUnit> {
   bool _loginFailed = false;
 
+  Future<User?> _onLogin(String uname, String pwd) async {
+    if (uname.isNotEmpty && pwd.isNotEmpty) {
+      return User(1);
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
@@ -53,17 +64,23 @@ class _LoginControlUnitState extends State<_LoginControlUnit>
               labelText: "Password",
               errorText: _loginFailed ? "Invalid password" : null)),
       const Divider(),
-      ElevatedButton(
-          onPressed: () {
+      Consumer<CurrentUserManager>(builder: (context, usrMgr, _) {
+        return ElevatedButton(
+          onPressed: () async {
             final unameVal = unameCtrl.text;
             final pwdVal = pwdCtrl.text;
 
-            bool isInvalid = unameVal.isEmpty || pwdVal.isEmpty;
+            User? usrInfo = await _onLogin(unameVal, pwdVal);
             setState(() {
-              _loginFailed = isInvalid;
+              _loginFailed = usrInfo == null;
             });
+
+            if (usrInfo != null) {
+              usrMgr.attachUser(usrInfo);
+            }
           },
-          child: const Text("Login"))
+          child: const Text("Login"));
+      })
     ]);
   }
 }

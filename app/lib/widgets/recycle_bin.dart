@@ -40,22 +40,15 @@ final class _RecycleBinStatusInfoState extends State<RecycleBinStatusInfo>
     throw UnimplementedError("API implementation still in progress");
   }
 
-  void _loadRecentCapacity() {
-    _recentCapacity = _getCurrentCapacity();
-  }
-
   @override
-  void updateToRecent() {
-    setState(() {
-      _loadRecentCapacity();
-    });
+  void onUpdating() {
+    _recentCapacity = _getCurrentCapacity();
   }
 
   @override
   void initState() {
     super.initState();
     _locationMemorizer = AsyncMemoizer();
-    _loadRecentCapacity();
   }
 
   FutureBuilder<RecycleBinLocation> _buildLocation(BuildContext context) {

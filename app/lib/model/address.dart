@@ -48,9 +48,8 @@ enum HKDistrict implements EnumeratedAddress {
 final class AddressInfo {
   final String address;
   final HKDistrict district;
-  final LatLng coordinate;
 
-  const AddressInfo(this.address, this.district, this.coordinate);
+  const AddressInfo(this.address, this.district);
 
   HKRegion get region => district.region;
 
@@ -59,38 +58,6 @@ final class AddressInfo {
 
   @override
   String toString() {
-    StringBuffer buf = StringBuffer();
-
-    final lat = coordinate.latitude;
-    final long = coordinate.longitude;
-
-    buf.write(completedAddress);
-
-    const int degCode = 0xB0;
-
-    buf
-      ..write(" (")
-      ..write(lat.abs())
-      ..writeCharCode(degCode);
-
-    if (lat > 0) {
-      buf.write("N");
-    } else if (lat < 0) {
-      buf.write("S");
-    }
-
-    buf
-      ..write(long.abs())
-      ..writeCharCode(degCode);
-
-    if (long > 0) {
-      buf.write("E");
-    } else if (long < 0) {
-      buf.write("W");
-    }
-
-    buf.write(")");
-
-    return buf.toString();
+    return completedAddress;
   }
 }
