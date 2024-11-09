@@ -150,7 +150,9 @@ class _RecycleBinMapInterfaceState extends State<_RecycleBinMapInterface> {
                       }
 
                       return const SizedBox();
-                    })
+                    }),
+                const SimpleAttributionWidget(
+                    source: Text('OpenStreetMap contributors'))
               ]);
         });
   }
