@@ -25,6 +25,19 @@ public:
     vector<Interaction> interactions; // User interaction record
 };
 
+struct Capacity
+{
+    int plastic;
+    int metal;
+    int paper;
+};
+
+
+
+
+
+
 extern vector<User> users;
+extern Capacity capacity;
 void fake_user_init();
 void data_init();

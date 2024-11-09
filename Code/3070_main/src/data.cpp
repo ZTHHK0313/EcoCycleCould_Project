@@ -2,6 +2,7 @@
 
 
 vector<User> users;
+Capacity capacity = {0,0,0};
 
 void fake_user_init() {
     users.push_back(User("Alice",0,100));
