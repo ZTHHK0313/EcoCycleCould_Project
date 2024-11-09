@@ -23,8 +23,33 @@ bool API_Server_init() {
     
 
     // format the user data into a JSON string using ArduinoJson
-    string response = "{\"df\" : [";
-    //{"id" : 0,"name":"test","pts":0,"Interactions":[{"waste_type":0,"pts":10,"time":100000}]}]}
+    /*
+    {"df":
+        [{  id":0,
+            "name":"Alice",
+            "pts":100,
+            "Interactions":[{
+                                "waste_type":0,
+                                "pts":10,
+                                "time":0
+                            },
+                            {   "waste_type":2,
+                                "pts":15,
+                                "time":0
+                            }]},
+         {  "id":1,
+            "name":"Bob",
+            "pts":200,
+            "Interactions":[{   "waste_type":0,
+                                "pts":100,
+                                "time":0
+                            },
+                            {   "waste_type":0,
+                                "pts":30,
+                                "time":0
+                            }]}
+    */
+    string response = "{\"df\":[";
     for(int i=0;i<users.size();i++){
         response += "{\"id\":";
         response += to_string(users[i].user_id);
@@ -41,9 +66,7 @@ bool API_Server_init() {
             response += ",\"time\":";
             response += to_string(users[i].interactions[j].time);
             response += "}";
-            if(j!=users[i].interactions.size()-1){
-                response += ",";
-            }
+            response += ",";
         }
         response += "]}";
 
@@ -52,7 +75,27 @@ bool API_Server_init() {
     server.on("/api/user_data", HTTP_GET, [response](AsyncWebServerRequest *request){
         request->send(200, "application/json", response.c_str());
     });
+    /*{
+        "capacity": {
+            "plastic": 45,
+            "metal": 75,
+            "paper": 90
+        }
+    }
+    */
+    response = "{\"id\":1,\"capacity\":{\"plastic\":";
+    response += to_string(capacity.plastic);
+    response += ",\"metal\":";
+    response += to_string(capacity.metal);
+    response += ",\"paper\":";
+    response += to_string(capacity.paper);
+    response += "}}";
 
+
+    server.on("/api/capacity", HTTP_GET, [response](AsyncWebServerRequest *request){
+        request->send(200, "application/json", response.c_str());
+    });
+    
 
     // Start the server
     server.begin();

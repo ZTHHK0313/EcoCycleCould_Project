@@ -7,9 +7,6 @@ float getLDRPercentage(int pin) {
   return percentage;
 }
 
-
-
-
 // testing
 // float getLDRPercentage(int pin) {
 //   int ldrValue = analogRead(pin);
