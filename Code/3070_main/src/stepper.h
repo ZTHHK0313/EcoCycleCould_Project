@@ -11,7 +11,8 @@
 //Pinout
 #define dirPin 1
 #define stepPin 2
-#define zeroPin 42 //home switch
+#define zeroPin 4 //home switch
+
 
 #define LEFT 0 // left direction move away from the motor
 #define RIGHT 1 // right direction move towards the motor
@@ -20,13 +21,17 @@
 #define inch *25.4
 
 //Config
-#define DEFAULT_SPEED 70 // fastest speed
-#define MAX_POSITION 23 cm //maximum position (Not tested)
-#define STEP_PER_MM 200 mm // const value 200 steps per mm for 1/8 microstep
+#define DEFAULT_SPEED 10 // fastest speed for 1/64 microstep
+#define MAX_POSITION 138 mm //maximum position (Not tested)
+//#define STEP_PER_MM 200 mm // const value 200 steps per mm for 1/8 microstep
+#define STEP_PER_MM 200 * 8 mm// const value 200 steps per rev for 1/64 microstep
+
 #define FIRST_BIN 0 cm //First Bin's Position (Not tested)
 #define SECOND_BIN 10 cm //First Bin's Position (Not tested)
 #define THIRD_BIN 20 cm //First Bin's Position (Not tested)
 
+//MACRO
+#define is_Home analogRead(zeroPin) > 2000
 
 
 ////////////////////////////
@@ -49,10 +54,10 @@ void stepper_move(bool dir, uint32_t dis, uint32_t delay_us);
 // stepper_move_to (Not tested)
 // A function to move to any position,
 // it will use delay function, cannot interrupt.
-// Parameters: dir: direction, pos: position, delay_us: speed (70-1000) smaller is faster
+// Parameters: pos: position, delay_us: speed (70-1000) smaller is faster
 // Author: KH
 ////////////////////////////
-void stepper_move_to(bool dir, uint32_t pos, uint32_t delay_us);
+void stepper_move_to( uint32_t pos, uint32_t delay_us);
 
 ////////////////////////////
 // STEPPER_ROTATE
@@ -67,9 +72,10 @@ void STEPPER_ROTATE(bool dir, uint32_t steps, uint32_t delay_us);
 // STEPPER_HOME (Not tested)
 // Internal function to Home the stepper motor. Go back to the zero position.
 // Do not use this function directly.
+// Return: true if success, false if failed
 // Author: KH
 ////////////////////////////
-void STEPPER_HOME();
+bool STEPPER_HOME();
 
 
 

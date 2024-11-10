@@ -12,6 +12,7 @@
  
 void setup() {
   Serial.begin(115200);
+<<<<<<< Updated upstream
   //stepper_init();
 
   data_init();
@@ -33,3 +34,17 @@ void loop() {
 
 
 
+=======
+  stepper_init();
+
+}
+void loop() {
+//get serial input
+  if (Serial.available() > 0) {
+    //int dir = Serial.parseInt();
+    int dis = Serial.parseInt();
+    int delay_us = Serial.parseInt();
+    stepper_move_to( dis, delay_us);
+  }
+}
+>>>>>>> Stashed changes
