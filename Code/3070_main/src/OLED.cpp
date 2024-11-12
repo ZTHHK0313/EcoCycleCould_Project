@@ -1,5 +1,4 @@
 #include "OLED.h"
-#include "card_and_servo_setting.h"
 #include "capacity.h"
 
 
@@ -85,4 +84,8 @@ void DisplayCapacity() {
   }
 
   display.display();
+}
+
+void Display_GasWarning() {
+ display.println("Warning: Flammable Gas");
 }

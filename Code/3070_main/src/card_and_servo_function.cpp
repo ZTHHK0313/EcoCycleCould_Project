@@ -1,5 +1,5 @@
 #include "card_and_servo_setting.h"
-
+#include "OLED.h"
 
 
 int curr_cards = 0;  
@@ -57,7 +57,7 @@ int wcase = 3; // testing
 int wasteClassify() { // testing
   DisplayMessage("Analyzing...", 2000);
 
-  classifyResult(wcase);
+  classifyResult(wcase); //suggest to replace the wcase with AI classify function. 
 
   if (wcase == 1 || wcase == 2 || wcase == 3) {
     return wcase;

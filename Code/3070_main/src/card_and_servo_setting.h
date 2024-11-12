@@ -19,12 +19,9 @@ struct Card {
 
 
 void printUID(byte *uid); //print UID到監控台
-void DisplayCapacity(); // display capacity 到OLED
 int searchCardByUID(byte uid[4]); //在database尋找UID有沒有對應的card
-bool addCard(int id, byte uid[4]); //
-int wasteClassify(); // testing
-void displayCardInfo(int index);
-void classifyResult(int wcase);
-void DisplayMessage(const char *message, int duration);
-
+bool addCard(int id, byte uid[4]); //加card ID
+int wasteClassify(); // testing, just inculde classifyResult() and hold the process of wasteClassify.
+void moveCoverServo(); // **missing code of this function!** 
+void updateBinCapacity(int wcase); // **missing code of this function!** 
 
