@@ -3,17 +3,17 @@
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 
-void displayCardInfo(int index,Card* cards) {
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0, 10);
-  display.print("Registered ID: ");
-  display.println(cards[index].id);
-  display.print("Points: ");
-  display.println(cards[index].count);
-  display.display();
-  delay(1000);
+void displayCardInfo(int index,void* cards) {
+  // display.clearDisplay();
+  // display.setTextSize(1);
+  // display.setTextColor(SSD1306_WHITE);
+  // display.setCursor(0, 10);
+  // display.print("Registered ID: ");
+  // display.println(cards[index].id);
+  // display.print("Points: ");
+  // display.println(cards[index].count);
+  // display.display();
+  // delay(1000);
 }
 
 void DisplayMessage(const char *message, int duration) {
@@ -65,19 +65,19 @@ void DisplayCapacity() {
 
   display.println("Occupied Capacity:");
 
-  if (canPercentage < fullCapacity) {
+  if (canPercentage < FULL_CAP) {
     display.println("Can: FULL");
   } else {
     display.println("Can: Available");
   }
 
-  if (plasticPercentage < fullCapacity) {
+  if (plasticPercentage < FULL_CAP) {
     display.println("Plastic: FULL");
   } else {
     display.println("Plastic: Available");
   }
 
-  if (paperPercentage < fullCapacity) {
+  if (paperPercentage < FULL_CAP) {
     display.println("Paper: FULL");
   } else {
     display.println("Paper: Available");

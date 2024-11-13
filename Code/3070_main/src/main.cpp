@@ -4,38 +4,44 @@
 #include "smokedetcet.h"
 #include "APIServer.h"
 #include <Arduino.h>
-#include <MFRC522.h>
 #include "OLED.h"
 #ifndef DATA_H
 #define DATA_H
 #include "data.h"
 #endif
 
-
+ 
 void setup() {
   Serial.begin(115200);
 //<<<<<<< Updated upstream
-  //stepper_init();
+card_init();
+  // stepper_init();
 
-  data_init();
-  while(!API_Server_init()){
-    Serial.println("Server failed to start, retrying...");
-  }
-  stepper_init(); //set the stepper to init pos.
+  // data_init();
+  
+  // while(!API_Server_init()){
+  //   Serial.println("Server failed to start, retrying...");
+  // }
+  // stepper_init(); //set the stepper to init pos.
+
 }
 
 //=======
 
 void loop() {
+test();
+
+
 //get serial input
-  if (Serial.available() > 0) {
-    //int dir = Serial.parseInt();
-    int dis = Serial.parseInt();
-    int delay_us = Serial.parseInt();
-    stepper_move_to( dis, delay_us);
-  }
-  gaswarning(); // inclued display
-  DisplayCapacity();
+  // if (Serial.available() > 0) {
+  //   //int dir = Serial.parseInt();
+  //   int dis = Serial.parseInt();
+  //   int delay_us = Serial.parseInt();
+  //   stepper_move_to( dis, delay_us);
+  // }
+  // gaswarning();
+  // DisplayMessage("Welcome!", 1000);
+  // DisplayCapacity();
   
   // if (Serial.available() > 0) {
   //   int dir = Serial.parseInt();
@@ -43,16 +49,6 @@ void loop() {
   //   int delay_us = Serial.parseInt();
   //   stepper_move(dir, dis, delay_us);
   // }
-
-  //if(Card_login()){
-  //  Add_card();
-  //  moveCoverServo();
-  //  displayCardInfo(UID);
-  //  Stepper_move_to(API_GET_WasteClassify()); //API may output the result as 1,2,3?
-  //  stepper_init();
-  //  Update_user_marks(UID); //Update user marks
-  //  updateBinCapacity();
-  //  DisplayCapacity();
-  //}
+  //gaswarning();s
 }
 //>>>>>>> Stashed changes
