@@ -25,14 +25,14 @@ final class _HistoryPageState extends State<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUsr = context.watch<CurrentUserManager>().current;
+    final currentUsr = context.read<CurrentUserManager>().current;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Reward history"),
       ),
       body: SafeArea(
-          child: FutureBuilder(
+          child: FutureBuilder<PointsTranscriptionsPage>(
               future: loadPointsTranscription(currentUsr, page),
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
@@ -41,7 +41,7 @@ final class _HistoryPageState extends State<HistoryPage> {
                     return const CircularProgressIndicator();
                   case ConnectionState.done:
                     if (snapshot.hasData) {
-                      final (transcription, hasNext) = snapshot.data!;
+                      final (:transcriptions, :hasNext) = snapshot.data!;
                       VoidCallback? mvLeft = page > 1
                               ? () {
                                   setState(() {
@@ -63,13 +63,13 @@ final class _HistoryPageState extends State<HistoryPage> {
                               child: ListView.builder(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 4),
-                                  itemCount: transcription.length,
+                                  itemCount: transcriptions.length,
                                   itemBuilder: (context, index) {
                                     return Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 4),
                                         child: PointsStatement(
-                                            transcription[index]));
+                                            transcriptions[index]));
                                   })),
                           SizedBox(
                               height: 64,

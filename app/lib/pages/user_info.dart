@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../controller/user.dart';
 import '../model/user_infos/user.dart';
 import '../themes/states.dart';
 import 'user_form_mixin.dart';
@@ -42,10 +43,6 @@ final class UserInfoPage extends StatelessWidget {
 
     final usrMgr = context.watch<CurrentUserManager>();
 
-    Future<(String, String)> obtainLoginInfo() async {
-      return ("", "");
-    }
-
     return Scaffold(
         appBar: AppBar(
           title: const Text("User info"),
@@ -56,8 +53,8 @@ final class UserInfoPage extends StatelessWidget {
                 child: Column(children: <Flexible>[
                   Flexible(
                       flex: 4,
-                      child: FutureBuilder(
-                          future: obtainLoginInfo(),
+                      child: FutureBuilder<UserLoginIdentity>(
+                          future: queryLoginInfo(usrMgr.current),
                           builder: (context, snapshot) {
                             switch (snapshot.connectionState) {
                               case ConnectionState.waiting:
@@ -65,10 +62,9 @@ final class UserInfoPage extends StatelessWidget {
                                 return const CircularProgressIndicator();
                               case ConnectionState.done:
                                 if (snapshot.hasData) {
-                                  final (uname, pwd) = snapshot.data!;
-
                                   return ListView(children: <Widget>[
-                                    _UserInfoEditor(uname, pwd)
+                                    _UserInfoEditor(
+                                        usrMgr.current, snapshot.data!)
                                   ]);
                                 }
 
@@ -105,9 +101,10 @@ final class UserInfoPage extends StatelessWidget {
 }
 
 final class _UserInfoEditor extends StatefulWidget {
-  final String uname, pwd;
+  final User currentUsr;
+  final UserLoginIdentity origin;
 
-  _UserInfoEditor(this.uname, this.pwd, {super.key});
+  _UserInfoEditor(this.currentUsr, this.origin, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -118,20 +115,6 @@ final class _UserInfoEditor extends StatefulWidget {
 final class _UserInfoEditorState extends State<_UserInfoEditor>
     with UserInfoEditFormStateMixin<_UserInfoEditor> {
   late bool _editMode, _invalidData;
-
-  Future<bool> _submitAlternation() async {
-    return true;
-  }
-
-  Future<bool> _verifyInput() async {
-    if (unameCtrl.text.isEmpty || pwdCtrl.text.isEmpty) {
-      return false;
-    }
-
-    // Leave this place for verify with server side.
-
-    return true;
-  }
 
   @override
   void initState() {
@@ -157,14 +140,15 @@ final class _UserInfoEditorState extends State<_UserInfoEditor>
       Row(mainAxisAlignment: MainAxisAlignment.end, children: <ElevatedButton>[
         ElevatedButton(
             onPressed: () async {
-              if (_editMode) {
-                bool isInvalidInput = !await _verifyInput();
+              if (_editMode && widget.origin != loginIdentity) {
+                bool isInvalid =
+                    !await alterLoginIdentity(widget.currentUsr, loginIdentity);
 
                 setState(() {
-                  _invalidData = isInvalidInput;
+                  _invalidData = isInvalid;
                 });
 
-                if (isInvalidInput) {
+                if (isInvalid) {
                   return;
                 }
               }

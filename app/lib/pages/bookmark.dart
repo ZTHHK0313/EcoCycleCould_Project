@@ -104,7 +104,7 @@ final class _BookmarkPageState extends State<BookmarkPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUsr = context.watch<CurrentUserManager>().current;
+    final currentUsr = context.read<CurrentUserManager>().current;
 
     return Scaffold(
         appBar: AppBar(

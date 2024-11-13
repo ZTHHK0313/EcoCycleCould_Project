@@ -5,6 +5,8 @@ import '../model/recycle_bin/capacity.dart';
 import '../model/recycle_bin/location.dart';
 import '../model/user_infos/user.dart';
 
+typedef RecycleBinTuple = (RecycleBinLocation, RemainCapacity);
+
 Future<List<RecycleBinLocation>> loadAllRecycleBinsLocation() async {
   return [
     RecycleBinLocation(
@@ -14,7 +16,7 @@ Future<List<RecycleBinLocation>> loadAllRecycleBinsLocation() async {
   ];
 }
 
-Future<List<(RecycleBinLocation, RemainCapacity)>> loadBookmarkedRecycleBins(
+Future<List<RecycleBinTuple>> loadBookmarkedRecycleBins(
     User usr) async {
   return [
     (

@@ -72,7 +72,7 @@ final class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUsr = context.watch<CurrentUserManager>().current;
+    final currentUsr = context.read<CurrentUserManager>().current;
 
     return Scaffold(
       appBar: AppBar(
@@ -169,7 +169,7 @@ class _HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final usrMgr = context.watch<CurrentUserManager>();
+    final usrMgr = context.read<CurrentUserManager>();
 
     return StreamBuilder<LatLng>(
         stream: gpsLocStream,
