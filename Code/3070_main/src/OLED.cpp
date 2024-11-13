@@ -84,10 +84,19 @@ void DisplayCapacity() {
   }
 
   display.display();
-  delay(1000);
 }
 
 void Display_GasWarning() {
  display.println("Warning: Flammable Gas");
  delay(1000);
+}
+
+
+void Testing_display(){
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for (;;);
+  }
+  display.clearDisplay();
+  display.display();
 }

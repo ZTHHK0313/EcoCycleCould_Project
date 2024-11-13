@@ -19,3 +19,4 @@ void DisplayMessage(const char *message, int duration); //just display message w
 void classifyResult(int wcase); //input 1,2,3 ,output type with no1,2,3 to OLED
 void DisplayCapacity();// display LDRcapacity 到OLED
 void Display_GasWarning(); //Diaply GasWarning text to LED
+void Testing_display();

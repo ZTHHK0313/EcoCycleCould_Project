@@ -7,9 +7,9 @@
 
 int curr_cards = 0;  
 Card cards[MAX_CARDS];  
-
 byte scannedUID[4];  
 MFRC522 rfid(SS_PIN, RST_PIN);
+
 
 void printUID(byte *uid);
 int searchCardByUID(byte uid[4]);
@@ -27,6 +27,11 @@ void printUID(byte *uid) {
   }
   Serial.println();
 }
+
+
+
+
+
 
 bool addCard(int id, byte uid[4]) {
   if (curr_cards >= MAX_CARDS) {  

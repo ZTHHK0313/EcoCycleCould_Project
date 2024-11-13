@@ -4,13 +4,14 @@
 #include "smokedetcet.h"
 #include "APIServer.h"
 #include <Arduino.h>
+#include <MFRC522.h>
 #include "OLED.h"
 #ifndef DATA_H
 #define DATA_H
 #include "data.h"
 #endif
 
- 
+
 void setup() {
   Serial.begin(115200);
 //<<<<<<< Updated upstream
@@ -33,8 +34,7 @@ void loop() {
     int delay_us = Serial.parseInt();
     stepper_move_to( dis, delay_us);
   }
-  gaswarning();
-  DisplayMessage("Welcome!", 1000);
+  gaswarning(); // inclued display
   DisplayCapacity();
   
   // if (Serial.available() > 0) {
@@ -43,6 +43,16 @@ void loop() {
   //   int delay_us = Serial.parseInt();
   //   stepper_move(dir, dis, delay_us);
   // }
-  //gaswarning();s
+
+  //if(Card_login()){
+  //  Add_card();
+  //  moveCoverServo();
+  //  displayCardInfo(UID);
+  //  Stepper_move_to(API_GET_WasteClassify()); //API may output the result as 1,2,3?
+  //  stepper_init();
+  //  Update_user_marks(UID); //Update user marks
+  //  updateBinCapacity();
+  //  DisplayCapacity();
+  //}
 }
 //>>>>>>> Stashed changes
