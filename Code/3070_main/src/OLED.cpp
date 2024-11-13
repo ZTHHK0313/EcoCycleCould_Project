@@ -1,6 +1,6 @@
 #include "OLED.h"
 #include "capacity.h"
-
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 
 void displayCardInfo(int index,Card* cards) {
