@@ -2,7 +2,34 @@
 
 
 vector<User> users;
+
 Capacity capacity = {0,0,0};
+MFRC522 mfrc522(SS_PIN, RST_PIN);
+
+void card_init(){
+   SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI);
+   mfrc522.PCD_Init();
+}
+
+void test(){
+//卡片 UID: 12394124    圆
+//卡片 UID: 99178249    白
+    if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
+        Serial.print("卡片 UID: ");
+        
+        // 打印卡片 UID
+        for (byte i = 0; i < mfrc522.uid.size; i++) {
+            Serial.print(mfrc522.uid.uidByte[i]);
+        }
+        Serial.println();
+        
+        // 停止读卡
+        mfrc522.PICC_HaltA();
+    }
+}
+
+
+
 
 void fake_user_init() {
     users.push_back(User("Alice",0,100));

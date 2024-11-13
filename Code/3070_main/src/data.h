@@ -1,7 +1,25 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <MFRC522.h>
 using namespace std;
+
+
+
+#define RST_PIN 5 //RFID PIN
+#define SPI_MOSI 35 //RFID PIN
+#define SPI_MISO 37 //RFID PIN
+#define SPI_SCK 36 //RFID PIN
+#define SS_PIN 4 //RFID PIN
+
+#define MAX_CARDS 10
+#define SERVO_PIN 9 
+
+struct Card {
+  int id;
+  byte uid[4];
+  int count;
+};
 
 class User{
 public:
@@ -23,6 +41,7 @@ public:
     int user_id;                        //User ID
     int points;                         //User points
     vector<Interaction> interactions; // User interaction record
+    Card user_card;                     // User card
 };
 
 struct Capacity
@@ -39,5 +58,7 @@ struct Capacity
 
 extern vector<User> users;
 extern Capacity capacity;
+void card_init();
 void fake_user_init();
 void data_init();
+void test();

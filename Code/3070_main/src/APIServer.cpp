@@ -83,17 +83,18 @@ bool API_Server_init() {
         }
     }
     */
-    response = "{\"id\":1,\"capacity\":{\"plastic\":";
-    response += to_string(capacity.plastic);
-    response += ",\"metal\":";
-    response += to_string(capacity.metal);
-    response += ",\"paper\":";
-    response += to_string(capacity.paper);
-    response += "}}";
+
+    string response2 = "{\"id\":1,\"capacity\":{\"plastic\":";
+    response2 += to_string(capacity.plastic);
+    response2 += ",\"metal\":";
+    response2 += to_string(capacity.metal);
+    response2 += ",\"paper\":";
+    response2 += to_string(capacity.paper);
+    response2 += "}}";
 
 
-    server.on("/api/capacity", HTTP_GET, [response](AsyncWebServerRequest *request){
-        request->send(200, "application/json", response.c_str());
+    server.on("/api/capacity", HTTP_GET, [response2](AsyncWebServerRequest *request){
+        request->send(200, "application/json", response2.c_str());
     });
     
 
