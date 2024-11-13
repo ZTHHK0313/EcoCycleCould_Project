@@ -43,7 +43,7 @@ void main() {
           AddressInfo("AC1, City U", HKDistrict.ssp);
 
       expect(mockLocInfo.region, equals(HKRegion.kl));
-      expect(mockLocInfo.completedAddress, equals("AC1, City U, Kowloon"));
+      expect(mockLocInfo.completedAddress, equals("AC1, City U, Sham Shui Po, Kowloon"));
     });
   });
 
