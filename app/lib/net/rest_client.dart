@@ -19,7 +19,6 @@ String get _runningPlatform {
 
 base class RestClient extends BaseClient {
   late final Client _client;
-  final Uri apiGateway;
 
   static final AsyncMemoizer<String> _uaStrMemorizer = AsyncMemoizer();
 
@@ -39,7 +38,7 @@ base class RestClient extends BaseClient {
         return uaBuf.toString();
       });
 
-  RestClient(this.apiGateway, [Client? client]) {
+  RestClient([Client? client]) {
     Client defaultClient;
 
     if (Platform.isIOS) {
