@@ -4,6 +4,7 @@
 #include "smokedetcet.h"
 #include "APIServer.h"
 #include <Arduino.h>
+#include "OLED.h"
 #ifndef DATA_H
 #define DATA_H
 #include "data.h"
@@ -32,8 +33,10 @@ void loop() {
     int delay_us = Serial.parseInt();
     stepper_move_to( dis, delay_us);
   }
-
-
+  gaswarning();
+  DisplayMessage("Welcome!", 1000);
+  DisplayCapacity();
+  
   // if (Serial.available() > 0) {
   //   int dir = Serial.parseInt();
   //   int dis = Serial.parseInt();

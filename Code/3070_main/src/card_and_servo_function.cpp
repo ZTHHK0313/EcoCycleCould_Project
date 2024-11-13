@@ -1,5 +1,8 @@
-#include "card_and_servo_setting.h"
-#include "OLED.h"
+#ifndef CARD_DEF
+    #include "card_and_servo_setting.h"
+    #define CARD_DEF
+#endif
+
 
 
 int curr_cards = 0;  
