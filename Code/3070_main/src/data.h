@@ -10,7 +10,7 @@ using namespace std;
 #define SPI_MOSI 35 //RFID PIN
 #define SPI_MISO 37 //RFID PIN
 #define SPI_SCK 36 //RFID PIN
-#define SS_PIN 4 //RFID PIN
+#define SS_PIN 6 //RFID PIN
 
 #define MAX_CARDS 10
 #define SERVO_PIN 9 

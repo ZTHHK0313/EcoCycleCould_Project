@@ -12,8 +12,8 @@ void card_init(){
 }
 
 void test(){
-//卡片 UID: 12394124    圆
-//卡片 UID: 99178249    白
+//卡片 UID: 28502
+//卡片 UID: 51079
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
         Serial.print("卡片 UID: ");
         
