@@ -115,11 +115,13 @@ final class _UserInfoEditor extends StatefulWidget {
 final class _UserInfoEditorState extends State<_UserInfoEditor>
     with UserInfoEditFormStateMixin<_UserInfoEditor> {
   late bool _editMode, _invalidData;
+  late UserLoginIdentity origin;
 
   @override
   void initState() {
     _editMode = _invalidData = false;
     super.initState();
+    origin = widget.origin;
   }
 
   @override
@@ -140,12 +142,15 @@ final class _UserInfoEditorState extends State<_UserInfoEditor>
       Row(mainAxisAlignment: MainAxisAlignment.end, children: <ElevatedButton>[
         ElevatedButton(
             onPressed: () async {
-              if (_editMode && widget.origin != loginIdentity) {
+              if (_editMode && origin != loginIdentity) {
                 bool isInvalid =
                     !await alterLoginIdentity(widget.currentUsr, loginIdentity);
 
                 setState(() {
                   _invalidData = isInvalid;
+                  if (!isInvalid) {
+                    origin = loginIdentity;
+                  }
                 });
 
                 if (isInvalid) {
