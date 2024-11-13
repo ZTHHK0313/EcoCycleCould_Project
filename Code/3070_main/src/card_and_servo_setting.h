@@ -3,7 +3,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <Wire.h>
-const float fullCapacity = 90.0; // testing
+#define fullCapacity 90.0
 
 #define SS_PIN 53 //RFID PIN
 #define RST_PIN 5 //RFID PIN

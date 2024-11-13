@@ -84,8 +84,10 @@ void DisplayCapacity() {
   }
 
   display.display();
+  delay(1000);
 }
 
 void Display_GasWarning() {
  display.println("Warning: Flammable Gas");
+ delay(1000);
 }
