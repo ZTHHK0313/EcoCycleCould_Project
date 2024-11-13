@@ -177,6 +177,68 @@ final class _RecycleBinInfoDialog extends StatelessWidget {
             : AlterRecycleBinBookmarkAction.add);
   }
 
+  void _onAlterBookmark(
+      BuildContext context, bool inBookmark, User currentUsr) async {
+    bool performChange = await showDialog<bool>(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return AlertDialog(
+                  title: Text(
+                      "Do you want to ${inBookmark ? 'remove' : 'add'} this recycle bin in your bookmark?"),
+                  actions: <TextButton>[
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop<bool>(context, true);
+                        },
+                        child: const Text("Yes")),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop<bool>(context, false);
+                        },
+                        child: const Text("No"))
+                  ]);
+            }) ??
+        false;
+
+    if (!performChange) {
+      return;
+    }
+
+    if (await _updateBookmark(currentUsr, location, inBookmark)) {
+      showDialog<void>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+                title: const Text("Update success"),
+                actions: <TextButton>[
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Close"))
+                ]);
+          }).then((_) {
+        Navigator.pop(context);
+      });
+    } else {
+      showDialog<void>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+                title: const Text("Unexpected error"),
+                content: const Text("Try again later"),
+                actions: <TextButton>[
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("OK"))
+                ]);
+          });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentUsr = context.read<CurrentUserManager>().current;
@@ -194,66 +256,8 @@ final class _RecycleBinInfoDialog extends StatelessWidget {
                 final inBookmark = snapshot.data!;
 
                 return TextButton(
-                    onPressed: () async {
-                      bool performChange = await showDialog<bool>(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) {
-                                return AlertDialog(
-                                    title: Text(
-                                        "Do you want to ${inBookmark ? 'remove' : 'add'} this recycle bin in your bookmark?"),
-                                    actions: <TextButton>[
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.pop<bool>(context, true);
-                                          },
-                                          child: const Text("Yes")),
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.pop<bool>(context, false);
-                                          },
-                                          child: const Text("No"))
-                                    ]);
-                              }) ??
-                          false;
-
-                      if (!performChange) {
-                        return;
-                      }
-
-                      if (await _updateBookmark(
-                          currentUsr, location, inBookmark)) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                  title: const Text("Update success"),
-                                  actions: <TextButton>[
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("Close"))
-                                  ]);
-                            }).then((_) {
-                          Navigator.pop(context);
-                        });
-                      } else {
-                        showDialog<void>(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                  title: const Text("Unexpected error"),
-                                  content: const Text("Try again later"),
-                                  actions: <TextButton>[
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("OK"))
-                                  ]);
-                            });
-                      }
+                    onPressed: () {
+                      _onAlterBookmark(context, inBookmark, currentUsr);
                     },
                     child: Text(
                         inBookmark ? "Remove bookmark" : "Add to bookmark",
