@@ -178,8 +178,10 @@ class _HomeBody extends StatelessWidget {
             case ConnectionState.active:
             case ConnectionState.done:
               if (snapshot.hasError) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                Future.microtask(() {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Location service temproary unavailable.")));
+                });
               }
 
               return FutureBuilder<(RecycleBinLocation, RemainCapacity)>(
