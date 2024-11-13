@@ -62,3 +62,4 @@ void card_init();
 void fake_user_init();
 void data_init();
 void test();
+int RFID_READ();

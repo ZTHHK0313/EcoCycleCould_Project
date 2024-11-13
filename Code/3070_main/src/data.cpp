@@ -28,6 +28,23 @@ void test(){
     }
 }
 
+int RFID_READ(){
+    int result = 0;
+    while(1){
+        if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
+
+            for (byte i = 0; i < mfrc522.uid.size; i++) {
+                result += mfrc522.uid.uidByte[i]*pow(10,i);
+            }
+
+            mfrc522.PICC_HaltA();
+
+            return result;
+        }
+    }
+
+}
+
 
 
 
