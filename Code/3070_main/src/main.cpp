@@ -29,8 +29,7 @@ card_init();
 //=======
 
 void loop() {
-test();
-
+  Serial.println(RFID_READ());
 
 //get serial input
   // if (Serial.available() > 0) {

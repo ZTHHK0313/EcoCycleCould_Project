@@ -12,8 +12,8 @@ void card_init(){
 }
 
 void test(){
-//卡片 UID: 12394124    圆
-//卡片 UID: 99178249    白
+//卡片 UID: 28502
+//卡片 UID: 51079
     if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
         Serial.print("卡片 UID: ");
         
@@ -26,6 +26,23 @@ void test(){
         // 停止读卡
         mfrc522.PICC_HaltA();
     }
+}
+
+int RFID_READ(){
+    int result = 0;
+    while(1){
+        if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial()) {
+
+            for (byte i = 0; i < mfrc522.uid.size; i++) {
+                result += mfrc522.uid.uidByte[i]*pow(10,i);
+            }
+
+            mfrc522.PICC_HaltA();
+
+            return result;
+        }
+    }
+
 }
 
 
