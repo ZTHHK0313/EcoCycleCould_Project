@@ -6,29 +6,27 @@ import '../net/url.dart';
 
 typedef UserLoginIdentity = ({String uname, String pwd});
 
+List<UserLoginIdentity> _dummyLoginInfo = [
+  (uname: "Alice", pwd: "1234"),
+  (uname: "Bob", pwd: "4321")
+];
+
 Future<User?> verifyLogin(UserLoginIdentity identity) async {
-  return switch (identity) {
-    (uname: "Alice", pwd: "1234") => User(0),
-    (uname: "Bob", pwd: "4321") => User(1),
-    _ => null
-  };
+  final int uidx = _dummyLoginInfo.indexWhere((info) => info == identity);
+
+  return uidx >= 0 ? User(uidx) : null;
 }
 
 Future<UserLoginIdentity> queryLoginInfo(User usr) async {
-  switch (usr.identifier) {
-    case 0:
-      return (uname: "Alice", pwd: "1234");
-    case 1:
-      return (uname: "Bob", pwd: "4321");
-    default:
-      throw Exception("Unknown user id: ${usr.identifier}");
-  }
+  return _dummyLoginInfo[usr.identifier];
 }
 
 Future<bool> alterLoginIdentity(User usr, UserLoginIdentity newIdentity) async {
   if (newIdentity.uname.isEmpty || newIdentity.pwd.isEmpty) {
     return false;
   }
+
+  _dummyLoginInfo[usr.identifier] = newIdentity;
   
   return true;
 }
