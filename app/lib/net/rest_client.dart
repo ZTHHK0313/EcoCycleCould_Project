@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:async/async.dart';
-import 'package:cronet_http/cronet_http.dart';
-import 'package:cupertino_http/cupertino_http.dart';
 import 'package:http/http.dart'
     hide delete, get, head, patch, post, put, read, readBytes, runWithClient;
 import 'package:package_info_plus/package_info_plus.dart';
@@ -39,26 +37,7 @@ base class RestClient extends BaseClient {
       });
 
   RestClient([Client? client]) {
-    Client defaultClient;
-
-    /*if (Platform.isIOS) {
-      final sessionConf =
-          URLSessionConfiguration.ephemeralSessionConfiguration()
-            ..httpCookieAcceptPolicy =
-                NSHTTPCookieAcceptPolicy.NSHTTPCookieAcceptPolicyNever
-            ..cache = null;
-
-      defaultClient = CupertinoClient.fromSessionConfiguration(sessionConf);
-    } else if (Platform.isAndroid) {
-      final engine =
-          CronetEngine.build(cacheMode: CacheMode.disabled, enableHttp2: true);
-
-      defaultClient = CronetClient.fromCronetEngine(engine, closeEngine: true);
-    } else {*/
-      defaultClient = Client();
-    //}
-
-    _client = client ?? defaultClient;
+    _client = client ?? Client();
   }
 
   @override
