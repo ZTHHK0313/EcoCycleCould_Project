@@ -41,7 +41,7 @@ base class RestClient extends BaseClient {
   RestClient([Client? client]) {
     Client defaultClient;
 
-    if (Platform.isIOS) {
+    /*if (Platform.isIOS) {
       final sessionConf =
           URLSessionConfiguration.ephemeralSessionConfiguration()
             ..httpCookieAcceptPolicy =
@@ -54,9 +54,9 @@ base class RestClient extends BaseClient {
           CronetEngine.build(cacheMode: CacheMode.disabled, enableHttp2: true);
 
       defaultClient = CronetClient.fromCronetEngine(engine, closeEngine: true);
-    } else {
+    } else {*/
       defaultClient = Client();
-    }
+    //}
 
     _client = client ?? defaultClient;
   }

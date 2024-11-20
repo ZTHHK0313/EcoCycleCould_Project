@@ -1,3 +1,4 @@
+import 'package:eco_cycle_cloud/controller/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,12 +41,8 @@ class _LoginControlUnitState extends State<_LoginControlUnit>
     with UserInfoEditFormStateMixin<_LoginControlUnit> {
   bool _loginFailed = false;
 
-  Future<User?> _onLogin(String uname, String pwd) async {
-    if (uname.isNotEmpty && pwd.isNotEmpty) {
-      return User(1);
-    }
-
-    return null;
+  Future<User?> _onLogin(String uname, String pwd) {
+    return verifyLogin((uname: uname, pwd: pwd));
   }
 
   @override

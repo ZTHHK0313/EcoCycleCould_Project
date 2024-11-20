@@ -122,6 +122,8 @@ final class _UserInfoEditorState extends State<_UserInfoEditor>
     _editMode = _invalidData = false;
     super.initState();
     origin = widget.origin;
+    unameCtrl.text = origin.uname;
+    pwdCtrl.text = origin.pwd;
   }
 
   @override

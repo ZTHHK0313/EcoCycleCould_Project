@@ -91,6 +91,7 @@ final class _HistoryPageState extends State<HistoryPage> {
                         ],
                       );
                     } else if (snapshot.hasError) {
+                      print(snapshot.error);
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[

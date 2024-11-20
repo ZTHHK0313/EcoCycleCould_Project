@@ -1,7 +1,9 @@
 import 'package:async/async.dart';
+import 'package:eco_cycle_cloud/themes/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:icon_decoration/icon_decoration.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
@@ -127,7 +129,12 @@ class _RecycleBinMapInterfaceState extends State<_RecycleBinMapInterface> {
                   Marker(
                       point: currentLoc,
                       alignment: Alignment.center,
-                      child: const Icon(Icons.man, size: 36))
+                      child: DecoratedIcon(
+                          icon: Icon(Icons.man,
+                              size: 42, color: Colors.orange[400]),
+                          decoration: IconDecoration(
+                              border: IconBorder(
+                                  width: 1.25, color: ecoGreen[500]!))))
                 ]),
                 FutureBuilder<List<RecycleBinLocation>>(
                     future: loadAllRecycleBinsLocation(),
@@ -144,8 +151,12 @@ class _RecycleBinMapInterfaceState extends State<_RecycleBinMapInterface> {
                                           _openRecycleBinDialog(
                                               context, rbInfo);
                                         },
-                                        icon: const Icon(
-                                            FontAwesomeIcons.recycle))))
+                                        icon: DecoratedIcon(
+                                            icon: Icon(FontAwesomeIcons.recycle,
+                                                color: ecoGreen[700]),
+                                            decoration: const IconDecoration(
+                                                border:
+                                                    IconBorder(width: 1.5))))))
                                 .toList(growable: false));
                       }
 
@@ -164,7 +175,7 @@ final class _RecycleBinInfoDialog extends StatelessWidget {
   _RecycleBinInfoDialog(this.location, {super.key});
 
   Future<bool> _isInBookmark(User currentUser) async {
-    return false;
+    return recycleBinBookmarked(currentUser, location);
   }
 
   Future<bool> _updateBookmark(
