@@ -14,21 +14,36 @@ typedef RecycleBinTuple = (RecycleBinLocation, RemainCapacity);
 Future<List<RecycleBinLocation>> loadAllRecycleBinsLocation() async {
   return [
     RecycleBinLocation(
+        0,
+        AddressInfo("3/F, YEUNG (AC1), City U", HKDistrict.ssp),
+        LatLng(22.3355501, 114.1719903)),
+    RecycleBinLocation(
         1,
+        AddressInfo("3/F, YEUNG (AC1), City U", HKDistrict.ssp),
+        LatLng(22.3355501, 114.1719903)),
+    RecycleBinLocation(
+        2,
+        AddressInfo("3/F, YEUNG (AC1), City U", HKDistrict.ssp),
+        LatLng(22.3355501, 114.1719903)),
+    RecycleBinLocation(
+        3,
+        AddressInfo("3/F, YEUNG (AC1), City U", HKDistrict.ssp),
+        LatLng(22.3355501, 114.1719903)),
+    RecycleBinLocation(
+        4,
         AddressInfo("3/F, YEUNG (AC1), City U", HKDistrict.ssp),
         LatLng(22.3355501, 114.1719903)),
   ];
 }
 
-List<Map<int, bool>> _usrsFavState = [
-  {1: false},
-  {1: false}
+List<List<bool>> _usrsFavState = [
+  for (int i = 0; i < 2; i++) [false, false, false, false, false]
 ];
 
 bool recycleBinBookmarked(User usr, RecycleBinLocation loc) {
-  final Map<int, bool> usrFavState = _usrsFavState[usr.identifier];
+  final List<bool> usrFavState = _usrsFavState[usr.identifier];
 
-  return usrFavState[loc.identifier] ?? false;
+  return usrFavState[loc.identifier];
 }
 
 Future<List<RecycleBinTuple>> loadBookmarkedRecycleBins(User usr) async {
@@ -36,16 +51,15 @@ Future<List<RecycleBinTuple>> loadBookmarkedRecycleBins(User usr) async {
       .then((locs) => locs.where((loc) => recycleBinBookmarked(usr, loc)));
 
   final List<RecycleBinTuple> tmp = [];
-  final Map<String, dynamic> rbCap = await getAllRawRecycleBinCapacity();
+  final List<dynamic> rbCap = await getAllRawRecycleBinCapacity();
 
-  if (favLocs.where((loc) => loc.identifier == rbCap["id"]).isNotEmpty) {
-    final currentLoc = favLocs.first;
-    final capacity = rbCap["capacity"];
+  for (RecycleBinLocation rbLoc in favLocs) {
+    final favCap = rbCap[rbLoc.identifier]["capacity"];
 
     tmp.add((
-      currentLoc,
-      RemainCapacity(currentLoc.identifier, capacity["plastic"], capacity["metal"],
-          capacity["paper"])
+      rbLoc,
+      RemainCapacity(
+          rbLoc.identifier, favCap["plastic"], favCap["metal"], favCap["paper"])
     ));
   }
 
@@ -56,7 +70,7 @@ enum AlterRecycleBinBookmarkAction { add, remove }
 
 Future<bool> alterRecycleBinBookmark(User usr, RecycleBinLocation rbLoc,
     AlterRecycleBinBookmarkAction action) async {
-  final Map<int, bool> usrFavState = _usrsFavState[usr.identifier];
+  final List<bool> usrFavState = _usrsFavState[usr.identifier];
 
   usrFavState[rbLoc.identifier] = switch (action) {
     AlterRecycleBinBookmarkAction.add => true,
@@ -66,11 +80,13 @@ Future<bool> alterRecycleBinBookmark(User usr, RecycleBinLocation rbLoc,
   return true;
 }
 
-Future<Map<String, dynamic>> getAllRawRecycleBinCapacity() async {
+Future<List<dynamic>> getAllRawRecycleBinCapacity() async {
   final RestClient c = RestClient();
 
   try {
-    return await c.get(APIPath.capacity).then((resp) => jsonDecode(resp.body));
+    return await c
+        .get(APIPath.capacity)
+        .then((resp) => jsonDecode(resp.body)["df"]);
   } finally {
     c.close();
   }
