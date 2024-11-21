@@ -12,9 +12,7 @@ import 'pages/login.dart';
 import 'themes/colours.dart';
 import 'themes/states.dart';
 
-void main() {
-  APIPath.useLocalMock = true;
-
+void _hideErrorWhenLogout() {
   FlutterError.onError = (detail) {
     if (detail.exception is! UserLogoutException) {
       FlutterError.presentError(detail);
@@ -35,6 +33,12 @@ void main() {
 
     return const SizedBox();
   };
+}
+
+void main() {
+  APIPath.useLocalMock = true;
+
+  _hideErrorWhenLogout();
 
   WidgetsFlutterBinding.ensureInitialized();
 
