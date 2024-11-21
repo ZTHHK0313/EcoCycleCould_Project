@@ -180,7 +180,8 @@ class _HomeBody extends StatelessWidget {
               if (snapshot.hasError) {
                 Future.microtask(() {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Location service temproary unavailable.")));
+                      content:
+                          Text("Location service temproary unavailable.")));
                 });
               }
 
@@ -200,7 +201,14 @@ class _HomeBody extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 4),
                               shrinkWrap: true,
-                              children: <RecycleBinStatusInfo>[
+                              children: <Widget>[
+                                const Padding(
+                                    padding: EdgeInsets.only(bottom: 4),
+                                    child: Text(
+                                        "Your nearest bookmarked recycle bin:",
+                                        style: TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.w700))),
                                 RecycleBinStatusInfo(rbLoc, rbCap)
                               ]);
                         } else if (snapshot.hasError) {

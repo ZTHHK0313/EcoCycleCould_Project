@@ -87,9 +87,10 @@ final class UserInfoPage extends StatelessWidget {
                     ElevatedButton(
                         onPressed: () async {
                           if (await _promptLogout(context)) {
-                            // Do logout here
-                            usrMgr.flushUser();
                             Navigator.popUntil(context, (r) => r.isFirst);
+                            // Do logout here
+                            Future.delayed(const Duration(milliseconds: 1),
+                                usrMgr.flushUser);
                           }
                         },
                         style: criticalBtnStyle,

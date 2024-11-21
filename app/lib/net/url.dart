@@ -1,8 +1,9 @@
 abstract final class APIPath {
   const APIPath._();
 
-  // TODO: Uses 192.168.1.156 for physical interaction or 10.0.2.2:3000 when using emulator + Mockoon
-  static final Uri gateway = Uri.http("192.168.1.156"/*"10.0.2.2:3000"*/);
+  static bool useLocalMock = false;
+
+  static Uri get gateway => Uri.http(useLocalMock ? "10.0.2.2:3000" : "192.168.1.156");
 
   static final Uri userData = gateway.resolve("/api/user_data");
 

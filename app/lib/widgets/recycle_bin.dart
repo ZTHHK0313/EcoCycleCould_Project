@@ -29,7 +29,7 @@ final class RecycleBinStatusInfo extends StatelessWidget {
               child: Text(rbLoc.address.completedAddress,
                   textAlign: TextAlign.left,
                   style: const TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.w700))),
+                      fontSize: 22, fontWeight: FontWeight.w700))),
           const Padding(
               padding: EdgeInsets.symmetric(horizontal: 12), child: Divider()),
           Padding(

@@ -1,3 +1,6 @@
+import 'package:eco_cycle_cloud/model/errors.dart';
+import 'package:eco_cycle_cloud/net/url.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +13,29 @@ import 'themes/colours.dart';
 import 'themes/states.dart';
 
 void main() {
+  APIPath.useLocalMock = true;
+
+  FlutterError.onError = (detail) {
+    if (detail.exception is! UserLogoutException) {
+      FlutterError.presentError(detail);
+    }
+  };
+
+  ErrorWidget.builder = (detail) {
+    if (detail.exception is UserLogoutException) {
+      return const Center(child: Row(children: <Widget>[
+        CircularProgressIndicator(),
+        Text("Logging out...")
+      ]));
+    }
+    
+    if (kDebugMode) {
+      return ErrorWidget(detail);
+    }
+
+    return const SizedBox();
+  };
+
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])

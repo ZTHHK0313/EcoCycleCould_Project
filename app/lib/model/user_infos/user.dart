@@ -1,3 +1,4 @@
+import 'package:eco_cycle_cloud/model/errors.dart';
 import 'package:flutter/material.dart';
 
 import '../identifiable.dart';
@@ -30,5 +31,11 @@ final class CurrentUserManager extends ChangeNotifier {
 
   bool get hasCurrentUser => _current != null;
 
-  User get current => _current!;
+  User get current {
+    if (!hasCurrentUser) {
+      throw const UserLogoutException();
+    }
+    
+    return _current!;
+  } 
 }

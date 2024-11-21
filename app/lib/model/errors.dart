@@ -45,3 +45,12 @@ class OutOfBoundError extends ArgumentError {
     return buf.toString();
   }
 }
+
+class UserLogoutException implements Exception {
+  const UserLogoutException();
+
+  @override
+  String toString() {
+    return "Current user is logging out.";
+  }
+}

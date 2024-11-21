@@ -94,78 +94,65 @@ class _RecycleBinMapInterfaceState extends State<_RecycleBinMapInterface> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<LatLng>(
-        future: obtainCurrentLocation(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
-          }
+    return FlutterMap(
+        mapController: _mapCtrl,
+        options: MapOptions(
+            minZoom: 9.75,
+            maxZoom: 17,
+            initialCenter: widget.coordinate,
+            cameraConstraint: CameraConstraint.contain(
+                bounds: LatLngBounds(const LatLng(22.547317, 113.801197),
+                    const LatLng(22.134689, 114.460742)))),
+        children: [
+          FutureBuilder<String>(
+              future: RestClient.userAgentString,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return TileLayer(
+                      urlTemplate:
+                          "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                      userAgentPackageName: snapshot.data ?? "unknown");
+                }
 
-          final currentLoc = snapshot.data!;
-
-          return FlutterMap(
-              mapController: _mapCtrl,
-              options: MapOptions(
-                  minZoom: 9.75,
-                  maxZoom: 17,
-                  initialCenter: currentLoc,
-                  cameraConstraint: CameraConstraint.contain(
-                      bounds: LatLngBounds(const LatLng(22.547317, 113.801197),
-                          const LatLng(22.134689, 114.460742)))),
-              children: [
-                FutureBuilder<String>(
-                    future: RestClient.userAgentString,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return TileLayer(
-                            urlTemplate:
-                                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                            userAgentPackageName: snapshot.data ?? "unknown");
-                      }
-
-                      return const SizedBox();
-                    }),
-                MarkerLayer(alignment: Alignment.center, markers: <Marker>[
-                  Marker(
-                      point: currentLoc,
+                return const SizedBox();
+              }),
+          MarkerLayer(alignment: Alignment.center, markers: <Marker>[
+            Marker(
+                point: widget.coordinate,
+                alignment: Alignment.center,
+                child: DecoratedIcon(
+                    icon: Icon(Icons.man, size: 42, color: Colors.orange[400]),
+                    decoration: IconDecoration(
+                        border:
+                            IconBorder(width: 1.25, color: ecoGreen[500]!))))
+          ]),
+          FutureBuilder<List<RecycleBinLocation>>(
+              future: loadAllRecycleBinsLocation(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return MarkerLayer(
                       alignment: Alignment.center,
-                      child: DecoratedIcon(
-                          icon: Icon(Icons.man,
-                              size: 42, color: Colors.orange[400]),
-                          decoration: IconDecoration(
-                              border: IconBorder(
-                                  width: 1.25, color: ecoGreen[500]!))))
-                ]),
-                FutureBuilder<List<RecycleBinLocation>>(
-                    future: loadAllRecycleBinsLocation(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return MarkerLayer(
-                            alignment: Alignment.center,
-                            markers: snapshot.data!
-                                .map((rbInfo) => Marker(
-                                    alignment: Alignment.center,
-                                    point: rbInfo.coordinate,
-                                    child: IconButton(
-                                        onPressed: () {
-                                          _openRecycleBinDialog(
-                                              context, rbInfo);
-                                        },
-                                        icon: DecoratedIcon(
-                                            icon: Icon(FontAwesomeIcons.recycle,
-                                                color: ecoGreen[700]),
-                                            decoration: const IconDecoration(
-                                                border:
-                                                    IconBorder(width: 1.5))))))
-                                .toList(growable: false));
-                      }
+                      markers: snapshot.data!
+                          .map((rbInfo) => Marker(
+                              alignment: Alignment.center,
+                              point: rbInfo.coordinate,
+                              child: IconButton(
+                                  onPressed: () {
+                                    _openRecycleBinDialog(context, rbInfo);
+                                  },
+                                  icon: DecoratedIcon(
+                                      icon: Icon(FontAwesomeIcons.recycle,
+                                          color: ecoGreen[700]),
+                                      decoration: const IconDecoration(
+                                          border: IconBorder(width: 1.5))))))
+                          .toList(growable: false));
+                }
 
-                      return const SizedBox();
-                    }),
-                const SimpleAttributionWidget(
-                    source: Text('OpenStreetMap contributors'))
-              ]);
-        });
+                return const SizedBox();
+              }),
+          const SimpleAttributionWidget(
+              source: Text('OpenStreetMap contributors'))
+        ]);
   }
 }
 
