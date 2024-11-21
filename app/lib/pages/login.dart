@@ -1,7 +1,7 @@
-import 'package:eco_cycle_cloud/controller/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../controller/user.dart';
 import '../model/user_infos/user.dart';
 import '../themes/colours.dart';
 import 'user_form_mixin.dart';

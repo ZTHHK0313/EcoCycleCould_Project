@@ -1,6 +1,6 @@
-import 'package:eco_cycle_cloud/model/errors.dart';
 import 'package:flutter/material.dart';
 
+import '../errors.dart';
 import '../identifiable.dart';
 
 final class User implements Identifiable<int> {
@@ -35,7 +35,7 @@ final class CurrentUserManager extends ChangeNotifier {
     if (!hasCurrentUser) {
       throw const UserLogoutException();
     }
-    
+
     return _current!;
   } 
 }

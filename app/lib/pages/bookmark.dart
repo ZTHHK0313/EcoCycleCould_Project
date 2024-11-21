@@ -1,10 +1,9 @@
-import 'package:eco_cycle_cloud/model/recycle_bin/capacity.dart';
-import 'package:eco_cycle_cloud/model/recycle_bin/location.dart';
-
-import '../controller/recycle_bin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../controller/recycle_bin.dart';
+import '../model/recycle_bin/capacity.dart';
+import '../model/recycle_bin/location.dart';
 import '../model/user_infos/user.dart';
 import '../widgets/recycle_bin.dart';
 

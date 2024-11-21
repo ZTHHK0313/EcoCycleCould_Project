@@ -1,5 +1,6 @@
-import 'package:eco_cycle_cloud/controller/user.dart';
 import 'package:flutter/material.dart';
+
+import '../controller/user.dart';
 
 mixin UserInfoEditFormStateMixin<T extends StatefulWidget> on State<T> {
   @protected

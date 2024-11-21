@@ -1,5 +1,3 @@
-import 'package:eco_cycle_cloud/model/errors.dart';
-import 'package:eco_cycle_cloud/net/url.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'model/user_infos/user.dart';
+import 'model/errors.dart';
+import 'net/url.dart';
 import 'pages/home.dart';
 import 'pages/login.dart';
 import 'themes/colours.dart';

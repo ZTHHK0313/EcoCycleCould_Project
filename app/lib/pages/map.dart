@@ -1,5 +1,4 @@
 import 'package:async/async.dart';
-import 'package:eco_cycle_cloud/themes/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +11,7 @@ import '../model/recycle_bin/location.dart';
 import '../net/rest_client.dart';
 import '../controller/location.dart';
 import '../controller/recycle_bin.dart';
+import '../themes/colours.dart';
 
 final class RecycleBinMapPage extends StatefulWidget {
   const RecycleBinMapPage({super.key});
