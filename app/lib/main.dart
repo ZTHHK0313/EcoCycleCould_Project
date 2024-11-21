@@ -36,8 +36,6 @@ void _hideErrorWhenLogout() {
 }
 
 void main() {
-  APIPath.useLocalMock = true;
-
   _hideErrorWhenLogout();
 
   WidgetsFlutterBinding.ensureInitialized();
