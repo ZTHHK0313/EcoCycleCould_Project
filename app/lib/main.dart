@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import 'model/user_infos/user.dart';
 import 'model/errors.dart';
-import 'net/url.dart';
 import 'pages/home.dart';
 import 'pages/login.dart';
 import 'themes/colours.dart';

@@ -1,6 +1,6 @@
+# flutter pub run flutter_launcher_icons
 flutter_launcher_icons:
-  android: true
+  image_path: "ecc.png"
+  android: "launcher_icon"
   ios: true
-  image_path: # Path to the logo
-  adaptive_icon_foreground: # Same value of `image_path`
-  adaptive_icon_background: '#1ac36a'
+  remove_alpha_channel_ios: true
