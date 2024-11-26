@@ -7,8 +7,10 @@ Capacity capacity = {0,0,0};
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
 void card_init(){
-   SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI);
-   mfrc522.PCD_Init();
+    Serial.println("RFID Init");
+    SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI);
+    mfrc522.PCD_Init();
+    Serial.println("RFID Init done");
 }
 
 void test(){
@@ -45,12 +47,19 @@ int RFID_READ(){
 
 }
 
-
+User* find_user_by_id(int id){
+    for(auto &user: users){
+        if(user.user_id == id){
+            return &user;
+        }
+    }
+    return nullptr;
+}
 
 
 void fake_user_init() {
-    users.push_back(User("Alice",0,100));
-    users.push_back(User("Bob",1,200));
+    users.push_back(User("Alice",28502,100));
+    users.push_back(User("Bob",51079,200));
     //add some interactions
     users[0].interactions.push_back({User::Metal, 10});
     users[0].interactions.push_back({User::Plastic, 15});

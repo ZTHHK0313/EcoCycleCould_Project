@@ -11,7 +11,7 @@ Serial.println(gaspresent);
 if(gaspresent>= 50)
 {
     warningsignal = 1;
-    Display_GasWarning();
+    showMessageMiddle("Gas Detected");
 }
 else
 {

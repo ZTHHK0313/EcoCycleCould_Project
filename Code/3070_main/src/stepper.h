@@ -1,6 +1,6 @@
 #include <Arduino.h>
 //Notes:
-//MS1:H, MS2:H, MS3:L (1/8 microstep)
+//MS1:L, MS2:L, MS3:H 
 //RESET->SLEEP (Disable sleep function on driver)
 
 
@@ -21,14 +21,14 @@
 #define inch *25.4
 
 //Config
-#define DEFAULT_SPEED 10 // fastest speed for 1/64 microstep
-#define MAX_POSITION 138 mm //maximum position (Not tested)
+#define DEFAULT_SPEED 20 //default speed
+#define MAX_POSITION 69 mm //maximum position 
 //#define STEP_PER_MM 200 mm // const value 200 steps per mm for 1/8 microstep
-#define STEP_PER_MM 200 * 8 mm// const value 200 steps per rev for 1/64 microstep
+#define STEP_PER_MM 200 * 8 mm// const value 200 steps per rev for 1/128 microstep
 
-#define FIRST_BIN 0 cm //First Bin's Position (Not tested)
-#define SECOND_BIN 10 cm //First Bin's Position (Not tested)
-#define THIRD_BIN 20 cm //First Bin's Position (Not tested)
+#define FIRST_BIN 0 cm //First Bin's Position 
+#define SECOND_BIN 3.8 cm //sec Bin's Position 
+#define THIRD_BIN 6.9 cm //third Bin's Position 
 
 //MACRO
 #define is_Home analogRead(zeroPin) > 2000

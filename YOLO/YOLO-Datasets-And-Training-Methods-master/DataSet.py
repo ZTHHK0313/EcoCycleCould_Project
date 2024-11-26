@@ -39,6 +39,7 @@ def convert_annotation(labelsavepath, xmlfilepath, image_id):
     一张图片文件对应一个xml文件，然后通过解析和归一化，能够将对应的信息保存到唯一一个label文件中去
     labal文件中的格式：calss x y w h　　同时，一张图片对应的类别有多个，所以对应的ｂｕｎｄｉｎｇ的信息也有多个
     '''
+
     in_file = open(os.path.join(xmlfilepath, '%s.xml' % (image_id)), encoding='utf-8')
     # 准备在对应的image_id 中写入对应的label，分别为
     # <object-class> <x> <y> <width> <height>
@@ -151,6 +152,10 @@ if __name__ == '__main__':
         # 读取在ImageSets/Main 中的train、test..等文件的内容
         # 包含对应的文件名称
         image_ids = open(os.path.join(txtsavepath, '%s.txt' % (image_set))).read().strip().split()
+        for i in image_ids:
+            if i == '.DS_S':
+                image_ids.remove(i)
+                
         list_file = open(os.path.join(opt.mainpath, '%s.txt' % (image_set)), 'w')
         # 将对应的文件_id以及全路径写进去并换行
         for image_id in image_ids:

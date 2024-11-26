@@ -6,11 +6,11 @@ using namespace std;
 
 
 
-#define RST_PIN 5 //RFID PIN
+#define RST_PIN 6 //RFID PIN
 #define SPI_MOSI 35 //RFID PIN
 #define SPI_MISO 37 //RFID PIN
 #define SPI_SCK 36 //RFID PIN
-#define SS_PIN 6 //RFID PIN
+#define SS_PIN 5 //RFID PIN
 
 #define MAX_CARDS 10
 #define SERVO_PIN 9 
@@ -60,6 +60,7 @@ extern vector<User> users;
 extern Capacity capacity;
 void card_init();
 void fake_user_init();
+User* find_user_by_id(int id);
 void data_init();
 void test();
 int RFID_READ();

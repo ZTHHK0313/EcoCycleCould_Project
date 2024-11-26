@@ -7,8 +7,11 @@
 #endif
 
 
-#define ssid  "ESP32-AP"
-#define password  "12345678"
+#define ssid2  "ECCRouter"
+#define password2  "12345678"
+
+#define ssid  "HK-XiaoMi"
+#define password  "54815984"
 
 
 
