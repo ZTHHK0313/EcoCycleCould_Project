@@ -15,15 +15,19 @@ Future<List<RecycleBinLocation>> loadAllRecycleBinsLocation() async {
   return [
     RecycleBinLocation(
         0,
-        AddressInfo("3/F, Yeung Kin Man Academic Building (AC1), City University of Hong Kong", HKDistrict.ssp),
+        AddressInfo(
+            "3/F, Yeung Kin Man Academic Building (AC1), City University of Hong Kong",
+            HKDistrict.ssp),
         LatLng(22.335833, 114.17344)),
     RecycleBinLocation(
         1,
-        AddressInfo("Kornhill Plaza South (Near Exit C, Tai Koo station)", HKDistrict.e),
+        AddressInfo("Kornhill Plaza South (Near Exit C, Tai Koo station)",
+            HKDistrict.e),
         LatLng(22.284280, 114.216613)),
     RecycleBinLocation(
         2,
-        AddressInfo("G/F, Mikiki (Near Prince Edward Rd. E. enterence)", HKDistrict.wts),
+        AddressInfo("G/F, Mikiki (Near Prince Edward Rd. E. enterence)",
+            HKDistrict.wts),
         LatLng(22.333339, 114.196761)),
     RecycleBinLocation(
         3,
@@ -31,7 +35,9 @@ Future<List<RecycleBinLocation>> loadAllRecycleBinsLocation() async {
         LatLng(22.313507, 114.224481)),
     RecycleBinLocation(
         4,
-        AddressInfo("Tsuen Wan Ferry Pair (Near Exit D, Tsuen Wan West station)", HKDistrict.tw),
+        AddressInfo(
+            "Tsuen Wan Ferry Pair (Near Exit D, Tsuen Wan West station)",
+            HKDistrict.tw),
         LatLng(22.366703, 114.110692)),
   ];
 }
@@ -51,7 +57,7 @@ Future<List<RecycleBinTuple>> loadBookmarkedRecycleBins(User usr) async {
       .then((locs) => locs.where((loc) => recycleBinBookmarked(usr, loc)));
 
   final List<RecycleBinTuple> tmp = [];
-  final List<dynamic> rbCap = await getAllRawRecycleBinCapacity();
+  final List<Map<String, dynamic>> rbCap = List.from(await getAllRawRecycleBinCapacity(), growable: false);
 
   for (RecycleBinLocation rbLoc in favLocs) {
     final favCap = rbCap[rbLoc.identifier]["capacity"];

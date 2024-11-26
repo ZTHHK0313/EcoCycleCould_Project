@@ -15,17 +15,18 @@ Future<PointsTranscriptionsPage> loadPointsTranscription(
   final rawData = await getRawUserData(usr);
 
   Iterable<(RecyclableMaterial, int, int)> interaction =
-      (rawData["Interactions"] as List<dynamic>).map((i) => (
-            switch (i["waste_type"]) {
-              0 => RecyclableMaterial.metal,
-              1 => RecyclableMaterial.paper,
-              2 => RecyclableMaterial.plastic,
-              _ => throw UnsupportedError(
-                  "Unknown enumerated value ${i["waste_type"]}")
-            },
-            i["pts"],
-            i["time"]
-          ));
+      List<Map<String, dynamic>>.from(rawData["Interactions"], growable: false)
+          .map((i) => (
+                switch (i["waste_type"]) {
+                  0 => RecyclableMaterial.metal,
+                  1 => RecyclableMaterial.paper,
+                  2 => RecyclableMaterial.plastic,
+                  _ => throw UnsupportedError(
+                      "Unknown enumerated value ${i["waste_type"]}")
+                },
+                i["pts"],
+                i["time"]
+              ));
 
   Iterable<int> timeGroup = interaction.map((t) => t.$3).toSet().toList()
     ..sort();
