@@ -1,6 +1,5 @@
 //Use Control A4988 stepper motor
 #include "stepper.h"
-#include "capacity.h"
 #include "smokedetcet.h"
 #include "APIServer.h"
 #include "OLED.h"
@@ -22,6 +21,10 @@ Servo servo1;
 Servo servo2;
 int card_id = -1;
 User* user = nullptr;
+
+TaskHandle_t Task1Handle = NULL;
+
+
 int Classify_Bin = 0;
 void servo_init() {
     ESP32PWM::allocateTimer(0);
@@ -45,7 +48,9 @@ void servo_move_ms(Servo& servo, int speed, bool direction,int delay_ms) {
 
 
 void setup() {
+  pinMode(12,INPUT);
   Serial.begin(115200);
+  Serial.println("Start");
   data_init();
 
   while(!API_Server_init()){
@@ -54,16 +59,25 @@ void setup() {
   card_init();
   servo_init();
   stepper_init();
-  initOLED();
+  //initOLED();
+
+  showMessageMiddle("Welcome!");
+
+  
+  xTaskCreatePinnedToCore(
+      gaswarning,            // Task function
+      "Task1",          // 任务名称
+      4096,             // 堆栈大小（字节）
+      NULL,             // 参数传递
+      1,                // 优先级
+      &Task1Handle,     // 任务句柄
+      1                 // 运行在 Core 0
+  );
+  Serial.println("Task1 created");
+
 
 
 //<<<<<<< Updated upstream
-
-   
-
-   
-  
-
   // stepper_init(); //set the stepper to init pos.
 
 }
@@ -108,15 +122,17 @@ void step2(){
 
 void step3(){
   //wait Classify
+  delay(5000);
   Classify_Bin = 0;
   while(Classify_Bin == 0){
     Serial.println("waiting for classify");
+    showMessageMiddle("waiting for classify");
     delay(100);
   }
 
   switch (Classify_Bin)
   {
-  case 1:
+  case 1: 
     stepper_move_to(FIRST_BIN, DEFAULT_SPEED);
     user->interactions.push_back({User::Paper, 10});
     showMessageMiddle("Paper");
@@ -144,7 +160,8 @@ void step3(){
 
 
 void loop() {
-  // test();
+  
+  //test();
   step1();
   step2();
   step3();

@@ -1,7 +1,0 @@
-/*
-    This format will be uses for requesting recycle bin's location as well as
-    it's capacity.
-*/
-{
-    "recycleBinId": [1, 3, 5] // At least one positive integer
-}

@@ -1,4 +1,0 @@
-{
-    "session": "(base64 encoded hash)",
-    "expiry": 2592000 // Seconds, session will be expired if keep inactive 30 days.
-}

@@ -1,62 +1,11 @@
 #include "capacity.h"
 
-float getLDRPercentage(int pin) {
-  int ldrValue = analogRead(pin);
+float getLDRPercentage() {
+  int ldrValue = analogRead(13);
   // Assuming the range is 0 to 1023, map it to a percentage (0 to 100%)
-  float percentage = (ldrValue / 1023.0) * 100;
+  float percentage = map(ldrValue-3900, 0, 4095-3900, 0, 100);
+  if(percentage < 0) {
+    percentage = 0;
+  }
   return percentage;
 }
-
-// testing
-// float getLDRPercentage(int pin) {
-//   int ldrValue = analogRead(pin);
-//   // Assuming the range is 0 to 1023, map it to a percentage (0 to 100%)
-//   float percentage = ldrValue;
-//   return percentage;
-// }
-// void DisplayCapacity() {
-  
-//   bool isFull[] = {false, false, false};
-
-//   // Read values from all LDRs and calculate percentages
-//   float canPercentage = getLDRPercentage(ldrPins[0]);
-//   float plasticPercentage = getLDRPercentage(ldrPins[1]);
-//   float paperPercentage = getLDRPercentage(ldrPins[2]);
-
-//   display.clearDisplay();
-//   display.setTextSize(1);
-//   display.setTextColor(SSD1306_WHITE);
-//   display.setCursor(0, 10);
-
-//   display.println("Occupied Capacity:");
-
-//   display.print("Can: ");
-//   display.println(String(canPercentage) + "%");
-
-//       display.print("Plastic: ");
-//     display.println(String(plasticPercentage) + "%");
-
-//     display.print("Paper: ");
-//     display.println(String(paperPercentage) + "%");
-
-  
-//   display.display();
-// }
-
-// void setup() {
-//   Serial.begin(9600);
-//   SPI.begin();  
-
-//   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-//     Serial.println(F("SSD1306 allocation failed"));
-//     for (;;);
-//   }
-//   display.clearDisplay();
-//   display.display(); 
-//   DisplayCapacity();
-// }
-
-// void loop() {
-//   DisplayCapacity();
-// }
-

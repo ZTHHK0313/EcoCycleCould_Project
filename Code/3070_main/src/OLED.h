@@ -9,6 +9,7 @@
 #define SCREEN_HEIGHT 64  
 #define OLED_RESET -1     
 
+extern String displayContent;
 
 void initOLED();
 void showMessageMiddle(const char *message);

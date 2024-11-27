@@ -1,6 +1,0 @@
-/*
-    Return a list of recycle bins' ID.
-
-    Request body should be ../../request/req_by_uid.json
-*/
-[333, 555, 913]
